@@ -4,6 +4,7 @@ description: "Discover how underground fungal networks connect forests, share re
 date: 2026-04-12
 category: nature
 tags: ["mycelium", "fungi", "ecology", "wood-wide-web", "biology"]
+image: "https://images.unsplash.com/photo-1530968033775-2c92736b131e?w=800&q=80"
 featured: false
 draft: false
 ---

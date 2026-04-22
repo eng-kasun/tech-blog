@@ -4,6 +4,7 @@ description: "A deep dive into hash tables — the elegant data structure that p
 date: 2026-04-10
 category: computer-science
 tags: ["hash-tables", "data-structures", "algorithms", "computer-science", "programming"]
+image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80"
 featured: false
 draft: false
 ---

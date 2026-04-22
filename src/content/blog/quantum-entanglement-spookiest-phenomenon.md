@@ -4,6 +4,7 @@ description: "Dive into quantum entanglement — the phenomenon Einstein called 
 date: 2026-04-18
 category: quantum-physics
 tags: ["quantum-entanglement", "quantum-computing", "bell-theorem", "quantum-mechanics", "physics"]
+image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80"
 featured: true
 draft: false
 ---

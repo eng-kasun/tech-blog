@@ -4,6 +4,7 @@ description: "Explore how the Transformer architecture revolutionized AI, from m
 date: 2026-04-20
 category: artificial-intelligence
 tags: ["transformers", "deep-learning", "NLP", "attention-mechanism", "LLMs"]
+image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80"
 featured: true
 draft: false
 ---

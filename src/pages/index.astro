@@ -103,6 +103,7 @@ const categoryCounts = categories.map(cat => ({
             date={post.data.date.toISOString()}
             category={post.data.category}
             slug={post.slug}
+            image={post.data.image}
             featured={i === 0 && post.data.featured}
           />
         ))}

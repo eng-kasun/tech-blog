@@ -36,6 +36,7 @@ Return ONLY a valid JSON object (no markdown code fences, no extra text) with th
   "title": "An engaging, specific title",
   "description": "A compelling 1-2 sentence summary (max 160 chars)",
   "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
+  "imageSearchTerm": "A 1-3 word Unsplash search term for a relevant hero image (e.g. 'neural network', 'galaxy stars', 'quantum physics', 'forest mushroom')",
   "content": "The full markdown content of the blog post (use ## for headings, regular markdown)"
 }`;
 
@@ -82,6 +83,12 @@ async function main() {
 
   const date = new Date().toISOString().split('T')[0];
 
+  // Build Unsplash image URL from AI-suggested search term
+  const searchTerm = encodeURIComponent(post.imageSearchTerm || resolvedCategory);
+  const imageUrl = `https://images.unsplash.com/photo-1?w=800&q=80&auto=format&fit=crop&fm=jpg&crop=entropy&cs=tinysrgb&s=${searchTerm}`;
+  // Use Unsplash source redirect for reliable topic-based images
+  const image = `https://source.unsplash.com/800x450/?${searchTerm}`;
+
   // Build frontmatter
   const frontmatter = `---
 title: "${post.title.replace(/"/g, '\\"')}"
@@ -89,6 +96,7 @@ description: "${post.description.replace(/"/g, '\\"')}"
 date: ${date}
 category: ${resolvedCategory}
 tags: [${post.tags.map(t => `"${t}"`).join(', ')}]
+image: "${image}"
 featured: false
 draft: false
 ---`;

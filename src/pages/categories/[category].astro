@@ -52,6 +52,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.cat
             date={post.data.date.toISOString()}
             category={post.data.category}
             slug={post.slug}
+            image={post.data.image}
           />
         ))}
       </div>

@@ -4,6 +4,7 @@ description: "How SpaceX's Starship is transforming space travel, enabling Mars 
 date: 2026-04-15
 category: space-technology
 tags: ["SpaceX", "Starship", "Mars", "space-exploration", "rockets"]
+image: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?w=800&q=80"
 featured: false
 draft: false
 ---
