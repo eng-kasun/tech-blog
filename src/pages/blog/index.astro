@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="All Articles">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="mb-12">
+      <h1 class="font-display text-4xl font-bold text-white mb-4">All Articles</h1>
+      <p class="text-dark-200 text-lg">Browse our complete collection of AI-generated deep dives.</p>
+    </div>
+
+    {allPosts.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {allPosts.map(post => (
+          <PostCard
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date.toISOString()}
+            category={post.data.category}
+            slug={post.slug}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-20 rounded-2xl border border-dashed border-dark-500">
+        <p class="text-dark-300 text-lg">No posts yet. Create a GitHub Issue to generate your first article!</p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

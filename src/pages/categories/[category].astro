@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const categories = [
+  { name: 'Computer Science', slug: 'computer-science', icon: '💻', gradient: 'from-blue-500 to-cyan-500' },
+  { name: 'Space Technology', slug: 'space-technology', icon: '🚀', gradient: 'from-violet-500 to-purple-500' },
+  { name: 'Artificial Intelligence', slug: 'artificial-intelligence', icon: '🤖', gradient: 'from-primary-500 to-accent-500' },
+  { name: 'Quantum Physics', slug: 'quantum-physics', icon: '⚛️', gradient: 'from-rose-500 to-orange-500' },
+  { name: 'Nature', slug: 'nature', icon: '🌿', gradient: 'from-green-500 to-emerald-500' },
+];
+
+export async function getStaticPaths() {
+  const categories = ['computer-science', 'space-technology', 'artificial-intelligence', 'quantum-physics', 'nature'];
+  return categories.map(cat => ({ params: { category: cat } }));
+}
+
+const { category } = Astro.params;
+const catInfo = categories.find(c => c.slug === category)!;
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft && data.category === category))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title={catInfo.name}>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="mb-12">
+      <a href="/tech-blog/categories/" class="inline-flex items-center gap-1 text-dark-300 hover:text-primary-400 text-sm mb-4 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        All categories
+      </a>
+      <div class="flex items-center gap-3">
+        <div class={`w-12 h-12 rounded-xl bg-gradient-to-br ${catInfo.gradient} flex items-center justify-center text-2xl`}>
+          {catInfo.icon}
+        </div>
+        <div>
+          <h1 class="font-display text-3xl font-bold text-white">{catInfo.name}</h1>
+          <p class="text-dark-300">{posts.length} {posts.length === 1 ? 'article' : 'articles'}</p>
+        </div>
+      </div>
+    </div>
+
+    {posts.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map(post => (
+          <PostCard
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date.toISOString()}
+            category={post.data.category}
+            slug={post.slug}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-20 rounded-2xl border border-dashed border-dark-500">
+        <p class="text-dark-300 text-lg">No articles in this category yet.</p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

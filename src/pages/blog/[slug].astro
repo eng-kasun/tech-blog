@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const categoryColors: Record<string, string> = {
+  'computer-science': 'from-blue-500 to-cyan-500',
+  'space-technology': 'from-violet-500 to-purple-500',
+  'artificial-intelligence': 'from-primary-500 to-accent-500',
+  'quantum-physics': 'from-rose-500 to-orange-500',
+  'nature': 'from-green-500 to-emerald-500',
+};
+
+const categoryIcons: Record<string, string> = {
+  'computer-science': '💻',
+  'space-technology': '🚀',
+  'artificial-intelligence': '🤖',
+  'quantum-physics': '⚛️',
+  'nature': '🌿',
+};
+
+const gradient = categoryColors[post.data.category] || 'from-primary-500 to-accent-500';
+const icon = categoryIcons[post.data.category] || '📝';
+const formattedDate = post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <!-- Back link -->
+    <a href="/tech-blog/blog/" class="inline-flex items-center gap-1 text-dark-300 hover:text-primary-400 text-sm mb-8 transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back to articles
+    </a>
+
+    <!-- Header -->
+    <header class="mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <span class={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${gradient} text-white`}>
+          <span>{icon}</span>
+          {post.data.category.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
+        </span>
+        <time class="text-dark-300 text-sm">{formattedDate}</time>
+      </div>
+
+      <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+        {post.data.title}
+      </h1>
+
+      <p class="text-dark-200 text-lg leading-relaxed">
+        {post.data.description}
+      </p>
+
+      {post.data.tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mt-4">
+          {post.data.tags.map((tag: string) => (
+            <span class="px-2.5 py-0.5 rounded-md bg-dark-600 text-dark-200 text-xs">#{tag}</span>
+          ))}
+        </div>
+      )}
+
+      <div class={`h-px bg-gradient-to-r ${gradient} mt-8 opacity-30`}></div>
+    </header>
+
+    <!-- Content -->
+    <div class="prose max-w-none">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

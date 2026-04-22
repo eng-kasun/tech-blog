@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="font-display text-4xl font-bold text-white mb-6">About TechVerse</h1>
+
+    <div class="prose max-w-none">
+      <p>
+        TechVerse is an AI-powered knowledge hub dedicated to exploring the most fascinating frontiers
+        of science and technology. From the quantum realm to the vast cosmos, from cutting-edge algorithms
+        to the wonders of the natural world — we cover it all.
+      </p>
+
+      <h2>How It Works</h2>
+      <p>
+        Every article on TechVerse is generated through an innovative AI-powered pipeline:
+      </p>
+      <ol>
+        <li><strong>Topic Selection</strong> — A new topic is submitted via GitHub Issues</li>
+        <li><strong>AI Generation</strong> — Google Gemini 2.0 Flash researches and writes a comprehensive article</li>
+        <li><strong>Auto Publishing</strong> — The article is automatically committed, built, and deployed</li>
+      </ol>
+
+      <h2>Topics We Cover</h2>
+      <ul>
+        <li><strong>Computer Science</strong> — Algorithms, data structures, programming paradigms, and software engineering</li>
+        <li><strong>Space Technology</strong> — Rockets, satellites, space exploration, and astrophysics</li>
+        <li><strong>Artificial Intelligence</strong> — Machine learning, neural networks, LLMs, and robotics</li>
+        <li><strong>Quantum Physics</strong> — Quantum computing, entanglement, superposition, and quantum mechanics</li>
+        <li><strong>Nature</strong> — Ecology, biology, climate science, and the wonders of the natural world</li>
+      </ul>
+
+      <h2>Open Source</h2>
+      <p>
+        TechVerse is fully open source. The entire site, including the AI content generation pipeline,
+        is available on GitHub. Feel free to fork it and create your own AI-powered blog!
+      </p>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,93 @@
+name: Generate AI Blog Post
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Topic for the blog post'
+        required: true
+        type: string
+      category:
+        description: 'Category'
+        required: true
+        type: choice
+        options:
+          - computer-science
+          - space-technology
+          - artificial-intelligence
+          - quantum-physics
+          - nature
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  generate:
+    # Only runs when "generate-post" label is added, or on manual trigger
+    if: >
+      (github.event_name == 'workflow_dispatch') ||
+      (github.event_name == 'issues' && github.event.label.name == 'generate-post')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install @google/generative-ai
+
+      - name: Extract topic from issue or input
+        id: topic
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "topic=${{ github.event.inputs.topic }}" >> $GITHUB_OUTPUT
+            echo "category=${{ github.event.inputs.category }}" >> $GITHUB_OUTPUT
+          else
+            TITLE="${{ github.event.issue.title }}"
+            BODY="${{ github.event.issue.body }}"
+            echo "topic=${TITLE}" >> $GITHUB_OUTPUT
+            # Try to extract category from issue body, default to AI
+            CATEGORY=$(echo "$BODY" | grep -oP 'category:\s*\K[\w-]+' || echo "artificial-intelligence")
+            echo "category=${CATEGORY}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate blog post with AI
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TOPIC: ${{ steps.topic.outputs.topic }}
+          CATEGORY: ${{ steps.topic.outputs.category }}
+        run: node scripts/generate-post.mjs
+
+      - name: Commit and push new post
+        run: |
+          git config user.name "TechVerse Bot"
+          git config user.email "bot@techverse.dev"
+          git add src/content/blog/
+          git commit -m "📝 New post: ${{ steps.topic.outputs.topic }}"
+          git push
+
+      - name: Close issue (if triggered by issue)
+        if: github.event_name == 'issues'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '✅ Blog post generated and published! It will be live in a few minutes after deployment.'
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
