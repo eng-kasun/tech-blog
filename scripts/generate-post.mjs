@@ -39,20 +39,38 @@ Return ONLY a valid JSON object (no markdown code fences, no extra text) with th
   "content": "The full markdown content of the blog post (use ## for headings, regular markdown)"
 }`;
 
-async function main() {
-  console.log(`Generating post about: "${topic}" in category: ${resolvedCategory}`);
+const models = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-flash-8b'];
 
+async function tryGenerate(modelName) {
+  console.log(`Trying model: ${modelName}`);
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.0-flash',
+    model: modelName,
     generationConfig: {
       temperature: 0.7,
       maxOutputTokens: 8192,
       responseMimeType: 'application/json',
     },
   });
-
   const result = await model.generateContent(prompt);
-  const responseText = result.response.text();
+  return result.response.text();
+}
+
+async function main() {
+  console.log(`Generating post about: "${topic}" in category: ${resolvedCategory}`);
+
+  let responseText;
+  for (const modelName of models) {
+    try {
+      responseText = await tryGenerate(modelName);
+      console.log(`Success with model: ${modelName}`);
+      break;
+    } catch (err) {
+      console.warn(`Model ${modelName} failed: ${err.message}`);
+      if (modelName === models[models.length - 1]) throw err;
+      console.log('Trying next model...');
+    }
+  }
+
   const post = JSON.parse(responseText);
 
   // Generate slug from title
