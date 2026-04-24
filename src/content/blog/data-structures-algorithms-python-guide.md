@@ -1,59 +1,49 @@
 ---
 title: "Data Structures & Algorithms: A Complete Guide with Python Examples"
-description: "Master the fundamental data structures and algorithms every programmer needs, with clear Python implementations and complexity analysis."
+description: "Master the fundamental data structures and algorithms every programmer needs — theory, intuition, and concise Python examples."
 date: 2026-04-24
 category: computer-science
 tags: ["data-structures", "algorithms", "python", "DSA", "programming"]
-image: "https://images.unsplash.com/photo-1515879218367-8466d910auj7?w=800&q=80"
+image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&q=80"
 featured: true
 draft: false
 ---
 
 ## Why Data Structures and Algorithms Matter
 
-Every piece of software you use — from Google Search to Instagram's feed — relies on carefully chosen data structures and algorithms. They determine whether your program runs in milliseconds or minutes, whether it handles 100 users or 100 million.
+Imagine you need to find a word in a dictionary. You wouldn't start from page one and read every word — you'd open it roughly in the middle, check if you're too far forward or behind, and narrow down. That intuition is **binary search**, and it's the difference between checking 100,000 words one by one versus finding your answer in just 17 steps.
 
-This guide covers the essential data structures and algorithms with Python implementations you can run, modify, and learn from.
+Every piece of software you use relies on carefully chosen data structures and algorithms. They determine whether your program runs in milliseconds or minutes, whether it scales to millions of users or crashes at a hundred. Understanding them is the single most important skill in computer science.
 
-## Arrays and Lists
+## Arrays: The Foundation of Everything
 
-An array stores elements in contiguous memory. Python's `list` is a dynamic array that resizes automatically.
+An **array** is the simplest data structure — a contiguous block of memory where elements are stored side by side, each accessible by its position (index).
+
+Think of it like a row of numbered lockers. If you know the locker number, you can open it instantly — that's $O(1)$ access. But if you need to find which locker contains a specific item, you must check them one by one — that's $O(n)$ search.
+
+The key tradeoff: arrays give you **fast access by position** but **slow insertions and deletions** in the middle, because all subsequent elements must shift over.
 
 ```python
-# Creating and manipulating lists
-numbers = [10, 20, 30, 40, 50]
+fruits = ["apple", "banana", "cherry", "date"]
 
-# Access by index - O(1)
-print(numbers[2])  # 30
+# Instant access by index
+print(fruits[2])  # cherry
 
-# Append - O(1) amortized
-numbers.append(60)
+# Searching requires scanning
+print("banana" in fruits)  # True
 
-# Insert at position - O(n)
-numbers.insert(0, 5)
-
-# Remove by value - O(n)
-numbers.remove(30)
-
-# Search - O(n)
-print(20 in numbers)  # True
-
-# Slicing - O(k) where k is slice size
-subset = numbers[1:4]
-print(subset)  # [10, 20, 40]
+# Inserting in the middle shifts everything after it
+fruits.insert(1, "blueberry")
+print(fruits)  # ['apple', 'blueberry', 'banana', 'cherry', 'date']
 ```
 
-**Time Complexity:**
-| Operation | Average |
-|-----------|---------|
-| Access    | $O(1)$  |
-| Search    | $O(n)$  |
-| Insert    | $O(n)$  |
-| Append    | $O(1)$  |
+## Linked Lists: Trading Access for Flexibility
 
-## Linked Lists
+A **linked list** solves the array's insertion problem. Instead of storing elements contiguously, each element (called a **node**) holds its data and a pointer to the next node — like a treasure hunt where each clue leads to the next.
 
-A linked list stores elements as nodes, each pointing to the next. Unlike arrays, insertions and deletions at known positions are $O(1)$, but random access is $O(n)$.
+This means inserting or deleting a node is $O(1)$ if you already have a reference to the right position — you just rewire the pointers. But finding a specific element requires walking the chain from the beginning, making search $O(n)$.
+
+**When to use linked lists**: when you need frequent insertions/deletions at arbitrary positions and don't need random access. They're the backbone of stacks, queues, and many other structures.
 
 ```python
 class Node:
@@ -61,545 +51,349 @@ class Node:
         self.data = data
         self.next = None
 
-class LinkedList:
-    def __init__(self):
-        self.head = None
+# Build a chain: 10 -> 20 -> 30
+head = Node(10)
+head.next = Node(20)
+head.next.next = Node(30)
 
-    def append(self, data):
-        new_node = Node(data)
-        if not self.head:
-            self.head = new_node
-            return
-        current = self.head
-        while current.next:
-            current = current.next
-        current.next = new_node
-
-    def prepend(self, data):
-        new_node = Node(data)
-        new_node.next = self.head
-        self.head = new_node
-
-    def delete(self, data):
-        if not self.head:
-            return
-        if self.head.data == data:
-            self.head = self.head.next
-            return
-        current = self.head
-        while current.next:
-            if current.next.data == data:
-                current.next = current.next.next
-                return
-            current = current.next
-
-    def search(self, data):
-        current = self.head
-        while current:
-            if current.data == data:
-                return True
-            current = current.next
-        return False
-
-    def display(self):
-        elements = []
-        current = self.head
-        while current:
-            elements.append(str(current.data))
-            current = current.next
-        print(" -> ".join(elements))
-
-# Usage
-ll = LinkedList()
-ll.append(10)
-ll.append(20)
-ll.append(30)
-ll.prepend(5)
-ll.display()       # 5 -> 10 -> 20 -> 30
-ll.delete(20)
-ll.display()       # 5 -> 10 -> 30
-print(ll.search(10))  # True
+# Walk the chain
+current = head
+while current:
+    print(current.data, end=" -> ")
+    current = current.next
+# Output: 10 -> 20 -> 30 ->
 ```
 
-## Stacks
+## Stacks: Last In, First Out
 
-A stack follows **Last-In, First-Out (LIFO)** — like a stack of plates. The last element added is the first one removed.
+A **stack** is like a stack of plates — you can only add or remove from the top. The last item placed on top is the first one taken off. This principle is called **LIFO** (Last-In, First-Out).
+
+Stacks are everywhere in computing:
+- **Function calls**: when a function calls another function, the current state is pushed onto the call stack. When the inner function returns, the state is popped back.
+- **Undo operations**: each action is pushed onto a stack; pressing Ctrl+Z pops the most recent one.
+- **Expression evaluation**: compilers use stacks to parse mathematical expressions and check balanced brackets.
+
+The two core operations are **push** (add to top) and **pop** (remove from top), both $O(1)$.
 
 ```python
-class Stack:
-    def __init__(self):
-        self.items = []
+stack = []
+stack.append("first")
+stack.append("second")
+stack.append("third")
 
-    def push(self, item):
-        self.items.append(item)
-
-    def pop(self):
-        if self.is_empty():
-            raise IndexError("Stack is empty")
-        return self.items.pop()
-
-    def peek(self):
-        if self.is_empty():
-            raise IndexError("Stack is empty")
-        return self.items[-1]
-
-    def is_empty(self):
-        return len(self.items) == 0
-
-    def size(self):
-        return len(self.items)
-
-# Usage
-stack = Stack()
-stack.push(1)
-stack.push(2)
-stack.push(3)
-print(stack.peek())  # 3
-print(stack.pop())   # 3
-print(stack.pop())   # 2
-print(stack.size())  # 1
+print(stack.pop())  # third  (last in, first out)
+print(stack.pop())  # second
+print(stack)        # ['first']
 ```
 
-### Practical example: Balanced parentheses checker
+### Classic application: checking balanced parentheses
 
 ```python
-def is_balanced(expression):
+def is_balanced(expr):
     stack = []
     pairs = {')': '(', ']': '[', '}': '{'}
-
-    for char in expression:
+    for char in expr:
         if char in '([{':
             stack.append(char)
         elif char in ')]}':
             if not stack or stack[-1] != pairs[char]:
                 return False
             stack.pop()
-
     return len(stack) == 0
 
-print(is_balanced("({[()]})"))   # True
-print(is_balanced("({[()]}"))    # False
-print(is_balanced(")("))         # False
+print(is_balanced("{[()]}"))  # True
+print(is_balanced("{[(])}"))  # False
 ```
 
-## Queues
+## Queues: First In, First Out
 
-A queue follows **First-In, First-Out (FIFO)** — like a line at a store.
+A **queue** works like a line at a coffee shop — the first person in line is the first one served. This is **FIFO** (First-In, First-Out).
+
+Queues are essential for:
+- **Task scheduling**: operating systems queue processes waiting for CPU time
+- **Breadth-first search**: exploring a graph level by level
+- **Message systems**: requests are processed in the order they arrive
+- **Buffering**: streaming data is queued before playback
+
+The two core operations are **enqueue** (add to back) and **dequeue** (remove from front).
 
 ```python
 from collections import deque
 
-class Queue:
-    def __init__(self):
-        self.items = deque()
+queue = deque()
+queue.append("Alice")     # enqueue
+queue.append("Bob")
+queue.append("Charlie")
 
-    def enqueue(self, item):
-        self.items.append(item)
-
-    def dequeue(self):
-        if self.is_empty():
-            raise IndexError("Queue is empty")
-        return self.items.popleft()
-
-    def front(self):
-        if self.is_empty():
-            raise IndexError("Queue is empty")
-        return self.items[0]
-
-    def is_empty(self):
-        return len(self.items) == 0
-
-    def size(self):
-        return len(self.items)
-
-# Usage
-q = Queue()
-q.enqueue("Alice")
-q.enqueue("Bob")
-q.enqueue("Charlie")
-print(q.dequeue())  # Alice
-print(q.front())    # Bob
-print(q.size())     # 2
+print(queue.popleft())    # Alice  (first in, first out)
+print(queue.popleft())    # Bob
 ```
 
-## Hash Tables (Dictionaries)
+**Why `deque`?** Using a regular list with `pop(0)` is $O(n)$ because every element shifts. `deque` (double-ended queue) gives $O(1)$ for both ends.
 
-Hash tables map keys to values using a hash function, giving $O(1)$ average-case lookups.
+## Hash Tables: The $O(1)$ Lookup Machine
+
+A **hash table** (Python's `dict`) is perhaps the most practically important data structure. It maps **keys** to **values** using a **hash function** — a function that converts any key into an array index.
+
+The magic: instead of searching through data to find what you want, you compute where it *should* be and go directly there. Average-case lookup, insertion, and deletion are all $O(1)$.
+
+**How it works internally:**
+1. You provide a key (e.g., `"Alice"`)
+2. The hash function converts it to an integer (e.g., `4837261`)
+3. That integer is mapped to an array index (e.g., `4837261 % 64 = 29`)
+4. The value is stored at index 29
+
+**Collisions** occur when two keys hash to the same index. Common solutions include **chaining** (storing a list at each index) and **open addressing** (probing for the next empty slot).
 
 ```python
-# Python's dict is a hash table
-phonebook = {}
+# Python dict is a hash table
+phonebook = {
+    "Alice": "555-0101",
+    "Bob": "555-0102",
+    "Charlie": "555-0103",
+}
 
-# Insert - O(1)
-phonebook["Alice"] = "555-0101"
-phonebook["Bob"] = "555-0102"
-phonebook["Charlie"] = "555-0103"
+# O(1) lookup
+print(phonebook["Alice"])      # 555-0101
+print("Bob" in phonebook)      # True
 
-# Lookup - O(1)
-print(phonebook["Alice"])  # 555-0101
-
-# Check existence - O(1)
-print("Bob" in phonebook)  # True
-
-# Delete - O(1)
+# O(1) insert and delete
+phonebook["Diana"] = "555-0104"
 del phonebook["Charlie"]
-
-# Iterate - O(n)
-for name, number in phonebook.items():
-    print(f"{name}: {number}")
 ```
 
-### Building a hash table from scratch
+## Trees: Hierarchical Data
 
-```python
-class HashTable:
-    def __init__(self, size=64):
-        self.size = size
-        self.table = [[] for _ in range(size)]
+A **tree** is a hierarchical structure where each node has zero or more children. The topmost node is called the **root**, nodes with no children are **leaves**, and the connections are **edges**.
 
-    def _hash(self, key):
-        return hash(key) % self.size
+Trees model naturally hierarchical data: file systems, HTML documents, organizational charts, and decision processes.
 
-    def put(self, key, value):
-        index = self._hash(key)
-        for i, (k, v) in enumerate(self.table[index]):
-            if k == key:
-                self.table[index][i] = (key, value)
-                return
-        self.table[index].append((key, value))
+### Binary Search Trees (BST)
 
-    def get(self, key):
-        index = self._hash(key)
-        for k, v in self.table[index]:
-            if k == key:
-                return v
-        raise KeyError(key)
+A **BST** enforces one rule: for every node, all values in its left subtree are smaller, and all values in its right subtree are larger. This property enables $O(\log n)$ search on average — at each step, you eliminate half the remaining tree.
 
-    def delete(self, key):
-        index = self._hash(key)
-        for i, (k, v) in enumerate(self.table[index]):
-            if k == key:
-                self.table[index].pop(i)
-                return
-        raise KeyError(key)
-
-# Usage
-ht = HashTable()
-ht.put("name", "Alice")
-ht.put("age", 30)
-print(ht.get("name"))  # Alice
-print(ht.get("age"))   # 30
-```
-
-## Trees
-
-### Binary Search Tree (BST)
-
-A BST maintains the property: left child < parent < right child, enabling $O(\log n)$ search on average.
+However, if elements are inserted in sorted order, the tree degenerates into a linked list with $O(n)$ performance. Self-balancing variants like **AVL trees** and **Red-Black trees** solve this by automatically restructuring after insertions.
 
 ```python
 class TreeNode:
-    def __init__(self, value):
-        self.value = value
+    def __init__(self, val):
+        self.val = val
         self.left = None
         self.right = None
 
-class BinarySearchTree:
-    def __init__(self):
-        self.root = None
+def insert(root, val):
+    if not root:
+        return TreeNode(val)
+    if val < root.val:
+        root.left = insert(root.left, val)
+    else:
+        root.right = insert(root.right, val)
+    return root
 
-    def insert(self, value):
-        if not self.root:
-            self.root = TreeNode(value)
-        else:
-            self._insert(self.root, value)
+def search(root, val):
+    if not root:
+        return False
+    if val == root.val:
+        return True
+    elif val < root.val:
+        return search(root.left, val)
+    else:
+        return search(root.right, val)
 
-    def _insert(self, node, value):
-        if value < node.value:
-            if node.left is None:
-                node.left = TreeNode(value)
-            else:
-                self._insert(node.left, value)
-        else:
-            if node.right is None:
-                node.right = TreeNode(value)
-            else:
-                self._insert(node.right, value)
+# Build tree: insert 50, 30, 70, 20, 40
+root = None
+for v in [50, 30, 70, 20, 40]:
+    root = insert(root, v)
 
-    def search(self, value):
-        return self._search(self.root, value)
-
-    def _search(self, node, value):
-        if node is None:
-            return False
-        if value == node.value:
-            return True
-        elif value < node.value:
-            return self._search(node.left, value)
-        else:
-            return self._search(node.right, value)
-
-    def inorder(self):
-        """Returns sorted elements"""
-        result = []
-        self._inorder(self.root, result)
-        return result
-
-    def _inorder(self, node, result):
-        if node:
-            self._inorder(node.left, result)
-            result.append(node.value)
-            self._inorder(node.right, result)
-
-    def preorder(self):
-        result = []
-        self._preorder(self.root, result)
-        return result
-
-    def _preorder(self, node, result):
-        if node:
-            result.append(node.value)
-            self._preorder(node.left, result)
-            self._preorder(node.right, result)
-
-    def postorder(self):
-        result = []
-        self._postorder(self.root, result)
-        return result
-
-    def _postorder(self, node, result):
-        if node:
-            self._postorder(node.left, result)
-            self._postorder(node.right, result)
-            result.append(node.value)
-
-# Usage
-bst = BinarySearchTree()
-for val in [50, 30, 70, 20, 40, 60, 80]:
-    bst.insert(val)
-
-print(bst.inorder())    # [20, 30, 40, 50, 60, 70, 80]
-print(bst.preorder())   # [50, 30, 20, 40, 70, 60, 80]
-print(bst.postorder())  # [20, 40, 30, 60, 80, 70, 50]
-print(bst.search(40))   # True
-print(bst.search(45))   # False
+print(search(root, 40))   # True
+print(search(root, 45))   # False
 ```
 
-## Heaps and Priority Queues
+### Tree Traversals
 
-A **min-heap** is a complete binary tree where every parent is smaller than its children. It gives $O(1)$ access to the minimum and $O(\log n)$ insert/delete.
+There are three classic ways to visit every node:
+- **Inorder** (Left → Root → Right) — produces sorted output for a BST
+- **Preorder** (Root → Left → Right) — useful for copying a tree
+- **Postorder** (Left → Right → Root) — useful for deleting a tree
+
+```python
+def inorder(node):
+    if node:
+        inorder(node.left)
+        print(node.val, end=" ")
+        inorder(node.right)
+
+inorder(root)  # 20 30 40 50 70
+```
+
+## Heaps: Fast Access to the Extreme
+
+A **heap** is a specialized tree where the parent is always smaller (min-heap) or larger (max-heap) than its children. This guarantees that the minimum (or maximum) element is always at the root — accessible in $O(1)$.
+
+Heaps power **priority queues**, where elements are processed not in arrival order but by priority. Operating systems use them for job scheduling; Dijkstra's shortest path algorithm depends on them; and any "find the top K" problem is a heap problem.
+
+Insertion and extraction both take $O(\log n)$ because the heap property is restored by "bubbling" elements up or down.
 
 ```python
 import heapq
 
-# Min-heap using heapq
-heap = []
-heapq.heappush(heap, 30)
-heapq.heappush(heap, 10)
-heapq.heappush(heap, 50)
-heapq.heappush(heap, 20)
+tasks = []
+heapq.heappush(tasks, (3, "Low priority task"))
+heapq.heappush(tasks, (1, "Critical task"))
+heapq.heappush(tasks, (2, "Medium task"))
 
-print(heap[0])           # 10 (minimum element)
-print(heapq.heappop(heap))  # 10
-print(heapq.heappop(heap))  # 20
-
-# Build heap from list - O(n)
-nums = [40, 10, 30, 50, 20]
-heapq.heapify(nums)
-print(nums)  # [10, 20, 30, 50, 40]
-
-# Find k largest elements - O(n log k)
-data = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]
-print(heapq.nlargest(3, data))   # [9, 6, 5]
-print(heapq.nsmallest(3, data))  # [1, 1, 2]
+# Always get the highest-priority (lowest number) first
+print(heapq.heappop(tasks))  # (1, 'Critical task')
+print(heapq.heappop(tasks))  # (2, 'Medium task')
 ```
 
-## Graphs
+## Graphs: Modeling Connections
 
-Graphs model relationships between objects. Here's an implementation with BFS and DFS traversals.
+A **graph** consists of **vertices** (nodes) and **edges** (connections). Unlike trees, graphs can have cycles, and edges can be directed or undirected, weighted or unweighted.
+
+Graphs model social networks (who follows whom), road maps (cities and distances), web pages (links), dependencies (which tasks must complete before others), and countless other real-world systems.
+
+### Representation
+
+The two main ways to store a graph:
+- **Adjacency list**: each vertex stores a list of its neighbors. Space-efficient for sparse graphs.
+- **Adjacency matrix**: a 2D grid where `matrix[i][j] = 1` means an edge from vertex `i` to `j`. Fast edge lookup but uses $O(V^2)$ space.
+
+### BFS and DFS
+
+**Breadth-First Search (BFS)** explores all neighbors of the current node before moving deeper — like ripples spreading from a stone dropped in water. It finds the **shortest path** in unweighted graphs.
+
+**Depth-First Search (DFS)** dives as deep as possible along one branch before backtracking — like exploring a maze by always turning left. It's useful for detecting cycles, topological sorting, and finding connected components.
 
 ```python
-from collections import defaultdict, deque
+from collections import deque
 
-class Graph:
-    def __init__(self, directed=False):
-        self.adj_list = defaultdict(list)
-        self.directed = directed
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D'],
+    'C': ['A', 'D', 'E'],
+    'D': ['B', 'C'],
+    'E': ['C'],
+}
 
-    def add_edge(self, u, v):
-        self.adj_list[u].append(v)
-        if not self.directed:
-            self.adj_list[v].append(u)
-
-    def bfs(self, start):
-        """Breadth-First Search - explore level by level"""
-        visited = set([start])
-        queue = deque([start])
-        order = []
-
-        while queue:
-            node = queue.popleft()
-            order.append(node)
-            for neighbor in self.adj_list[node]:
-                if neighbor not in visited:
-                    visited.add(neighbor)
-                    queue.append(neighbor)
-
-        return order
-
-    def dfs(self, start):
-        """Depth-First Search - explore as deep as possible"""
-        visited = set()
-        order = []
-        self._dfs_helper(start, visited, order)
-        return order
-
-    def _dfs_helper(self, node, visited, order):
-        visited.add(node)
+def bfs(graph, start):
+    visited = set([start])
+    queue = deque([start])
+    order = []
+    while queue:
+        node = queue.popleft()
         order.append(node)
-        for neighbor in self.adj_list[node]:
+        for neighbor in graph[node]:
             if neighbor not in visited:
-                self._dfs_helper(neighbor, visited, order)
+                visited.add(neighbor)
+                queue.append(neighbor)
+    return order
 
-    def has_path(self, start, end):
-        """Check if path exists between two nodes"""
+def dfs(graph, start, visited=None):
+    if visited is None:
         visited = set()
-        return self._has_path(start, end, visited)
+    visited.add(start)
+    result = [start]
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            result.extend(dfs(graph, neighbor, visited))
+    return result
 
-    def _has_path(self, current, end, visited):
-        if current == end:
-            return True
-        visited.add(current)
-        for neighbor in self.adj_list[current]:
-            if neighbor not in visited:
-                if self._has_path(neighbor, end, visited):
-                    return True
-        return False
-
-# Usage
-g = Graph()
-g.add_edge(0, 1)
-g.add_edge(0, 2)
-g.add_edge(1, 3)
-g.add_edge(2, 3)
-g.add_edge(3, 4)
-
-print(g.bfs(0))         # [0, 1, 2, 3, 4]
-print(g.dfs(0))         # [0, 1, 3, 2, 4]
-print(g.has_path(0, 4)) # True
-print(g.has_path(4, 0)) # True
+print(bfs(graph, 'A'))  # ['A', 'B', 'C', 'D', 'E']
+print(dfs(graph, 'A'))  # ['A', 'B', 'D', 'C', 'E']
 ```
 
-## Sorting Algorithms
+## Sorting: Putting Things in Order
+
+Sorting is one of the most studied problems in computer science. A sorted dataset enables binary search, simplifies duplicate detection, and makes many problems dramatically easier.
 
 ### Bubble Sort — $O(n^2)$
 
-Simple but slow. Repeatedly swaps adjacent elements that are out of order.
+The simplest sorting algorithm. It repeatedly walks through the list, comparing adjacent elements and swapping them if they're in the wrong order. Each pass "bubbles" the largest unsorted element to its correct position.
+
+It's intuitive but painfully slow for large datasets. Useful only for educational purposes or nearly-sorted data.
 
 ```python
 def bubble_sort(arr):
     n = len(arr)
     for i in range(n):
-        swapped = False
-        for j in range(0, n - i - 1):
+        for j in range(n - i - 1):
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                swapped = True
-        if not swapped:
-            break
     return arr
 
-print(bubble_sort([64, 34, 25, 12, 22, 11, 90]))
-# [11, 12, 22, 25, 34, 64, 90]
+print(bubble_sort([64, 34, 25, 12]))  # [12, 25, 34, 64]
 ```
 
 ### Merge Sort — $O(n \log n)$
 
-Divide-and-conquer: split the array in half, sort each half, then merge.
+A **divide-and-conquer** algorithm. It splits the array in half, recursively sorts each half, then **merges** the two sorted halves. The merge step is the key insight — combining two sorted arrays into one sorted array takes only $O(n)$ time.
+
+Merge sort guarantees $O(n \log n)$ in all cases, making it reliable when worst-case performance matters. The tradeoff is $O(n)$ extra space for the temporary arrays.
 
 ```python
 def merge_sort(arr):
     if len(arr) <= 1:
         return arr
-
     mid = len(arr) // 2
     left = merge_sort(arr[:mid])
     right = merge_sort(arr[mid:])
-
     return merge(left, right)
 
 def merge(left, right):
-    result = []
-    i = j = 0
-
+    result, i, j = [], 0, 0
     while i < len(left) and j < len(right):
         if left[i] <= right[j]:
-            result.append(left[i])
-            i += 1
+            result.append(left[i]); i += 1
         else:
-            result.append(right[j])
-            j += 1
+            result.append(right[j]); j += 1
+    return result + left[i:] + right[j:]
 
-    result.extend(left[i:])
-    result.extend(right[j:])
-    return result
-
-print(merge_sort([38, 27, 43, 3, 9, 82, 10]))
-# [3, 9, 10, 27, 38, 43, 82]
+print(merge_sort([38, 27, 43, 3, 9]))  # [3, 9, 27, 38, 43]
 ```
 
 ### Quick Sort — $O(n \log n)$ average
 
-Pick a pivot, partition elements into smaller/larger groups, recurse.
+Quick sort picks a **pivot** element, partitions the array into elements smaller and larger than the pivot, then recursively sorts each partition. It's typically the fastest in practice due to excellent cache performance, and Python's built-in `sorted()` uses Timsort — a hybrid of merge sort and insertion sort.
+
+The weakness: if the pivot is consistently the smallest or largest element, it degrades to $O(n^2)$. Randomized pivot selection avoids this in practice.
 
 ```python
 def quick_sort(arr):
     if len(arr) <= 1:
         return arr
-
     pivot = arr[len(arr) // 2]
     left = [x for x in arr if x < pivot]
-    middle = [x for x in arr if x == pivot]
+    mid = [x for x in arr if x == pivot]
     right = [x for x in arr if x > pivot]
+    return quick_sort(left) + mid + quick_sort(right)
 
-    return quick_sort(left) + middle + quick_sort(right)
-
-print(quick_sort([10, 7, 8, 9, 1, 5]))
-# [1, 5, 7, 8, 9, 10]
+print(quick_sort([10, 7, 8, 9, 1]))  # [1, 7, 8, 9, 10]
 ```
 
-### Sorting comparison
+### Comparison
 
-| Algorithm    | Best       | Average        | Worst          | Space    | Stable |
-|-------------|------------|----------------|----------------|----------|--------|
-| Bubble Sort | $O(n)$     | $O(n^2)$       | $O(n^2)$       | $O(1)$   | Yes    |
-| Merge Sort  | $O(n \log n)$ | $O(n \log n)$ | $O(n \log n)$ | $O(n)$   | Yes    |
-| Quick Sort  | $O(n \log n)$ | $O(n \log n)$ | $O(n^2)$      | $O(\log n)$ | No  |
-| Python sort | $O(n)$     | $O(n \log n)$ | $O(n \log n)$  | $O(n)$   | Yes    |
+| Algorithm  | Best           | Average        | Worst          | Space        | Stable |
+|-----------|----------------|----------------|----------------|-------------|--------|
+| Bubble    | $O(n)$         | $O(n^2)$       | $O(n^2)$       | $O(1)$      | Yes    |
+| Merge     | $O(n \log n)$  | $O(n \log n)$  | $O(n \log n)$  | $O(n)$      | Yes    |
+| Quick     | $O(n \log n)$  | $O(n \log n)$  | $O(n^2)$       | $O(\log n)$ | No     |
 
-## Searching Algorithms
+## Searching: Finding What You Need
 
 ### Linear Search — $O(n)$
 
-```python
-def linear_search(arr, target):
-    for i, val in enumerate(arr):
-        if val == target:
-            return i
-    return -1
-
-print(linear_search([4, 2, 7, 1, 9], 7))  # 2
-print(linear_search([4, 2, 7, 1, 9], 5))  # -1
-```
+Check every element one by one. Works on any data, sorted or not. Simple but slow for large datasets.
 
 ### Binary Search — $O(\log n)$
 
-Requires a sorted array. Eliminates half the search space each step.
+Requires a **sorted** array. Compare the target with the middle element — if smaller, search the left half; if larger, search the right half. Each step eliminates half the remaining data, giving logarithmic performance.
+
+For a dataset of 1 billion elements, binary search finds the answer in at most 30 comparisons.
 
 ```python
 def binary_search(arr, target):
     left, right = 0, len(arr) - 1
-
     while left <= right:
         mid = (left + right) // 2
         if arr[mid] == target:
@@ -608,149 +402,59 @@ def binary_search(arr, target):
             left = mid + 1
         else:
             right = mid - 1
-
     return -1
 
-sorted_arr = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
-print(binary_search(sorted_arr, 23))   # 5
-print(binary_search(sorted_arr, 100))  # -1
+data = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
+print(binary_search(data, 23))   # 5
+print(binary_search(data, 100))  # -1
 ```
 
-### Binary Search (Recursive)
+## Dynamic Programming: Remembering the Past
+
+**Dynamic programming (DP)** is a technique for solving problems that can be broken into overlapping subproblems. Instead of recomputing the same subproblem repeatedly, you store (cache) its result and reuse it.
+
+The classic example is the **Fibonacci sequence**. The naive recursive approach has $O(2^n)$ complexity because it recalculates the same values exponentially many times. With DP, it drops to $O(n)$.
 
 ```python
-def binary_search_recursive(arr, target, left=0, right=None):
-    if right is None:
-        right = len(arr) - 1
-
-    if left > right:
-        return -1
-
-    mid = (left + right) // 2
-    if arr[mid] == target:
-        return mid
-    elif arr[mid] < target:
-        return binary_search_recursive(arr, target, mid + 1, right)
-    else:
-        return binary_search_recursive(arr, target, left, mid - 1)
-
-print(binary_search_recursive([1, 3, 5, 7, 9, 11], 7))  # 3
-```
-
-## Dynamic Programming
-
-Dynamic programming solves complex problems by breaking them into overlapping subproblems and caching results.
-
-### Fibonacci — from $O(2^n)$ to $O(n)$
-
-```python
-# Naive recursive - O(2^n) - DON'T use this
+# Naive: O(2^n) — each call branches into two
 def fib_naive(n):
-    if n <= 1:
-        return n
-    return fib_naive(n - 1) + fib_naive(n - 2)
+    if n <= 1: return n
+    return fib_naive(n-1) + fib_naive(n-2)
 
-# Memoized (top-down DP) - O(n)
-def fib_memo(n, cache={}):
-    if n in cache:
-        return cache[n]
-    if n <= 1:
-        return n
-    cache[n] = fib_memo(n - 1) + fib_memo(n - 2)
-    return cache[n]
-
-# Tabulated (bottom-up DP) - O(n) time, O(n) space
-def fib_tab(n):
-    if n <= 1:
-        return n
-    dp = [0] * (n + 1)
-    dp[1] = 1
-    for i in range(2, n + 1):
-        dp[i] = dp[i - 1] + dp[i - 2]
-    return dp[n]
-
-# Space-optimized - O(n) time, O(1) space
-def fib_optimal(n):
-    if n <= 1:
-        return n
+# DP (bottom-up): O(n) time, O(1) space
+def fib(n):
+    if n <= 1: return n
     a, b = 0, 1
     for _ in range(2, n + 1):
         a, b = b, a + b
     return b
 
-print(fib_optimal(50))  # 12586269025
+print(fib(50))  # 12586269025 (instant)
 ```
 
-### 0/1 Knapsack Problem
-
-Given items with weights and values, find the maximum value that fits in a knapsack of capacity $W$.
-
-```python
-def knapsack(weights, values, capacity):
-    n = len(weights)
-    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
-
-    for i in range(1, n + 1):
-        for w in range(capacity + 1):
-            # Don't take item i
-            dp[i][w] = dp[i - 1][w]
-            # Take item i (if it fits)
-            if weights[i - 1] <= w:
-                dp[i][w] = max(
-                    dp[i][w],
-                    dp[i - 1][w - weights[i - 1]] + values[i - 1]
-                )
-
-    return dp[n][capacity]
-
-weights = [2, 3, 4, 5]
-values  = [3, 4, 5, 6]
-capacity = 8
-print(knapsack(weights, values, capacity))  # 10
-```
-
-## Recursion Essentials
-
-### Tower of Hanoi
-
-```python
-def tower_of_hanoi(n, source='A', auxiliary='B', target='C'):
-    if n == 1:
-        print(f"Move disk 1 from {source} to {target}")
-        return
-    tower_of_hanoi(n - 1, source, target, auxiliary)
-    print(f"Move disk {n} from {source} to {target}")
-    tower_of_hanoi(n - 1, auxiliary, source, target)
-
-tower_of_hanoi(3)
-# Move disk 1 from A to C
-# Move disk 2 from A to B
-# Move disk 1 from C to B
-# Move disk 3 from A to C
-# Move disk 1 from B to A
-# Move disk 2 from B to C
-# Move disk 1 from A to C
-```
+The DP mindset applies to hundreds of problems: shortest paths, text alignment, knapsack optimization, string matching, and more. The key question is always: **can I express this problem in terms of smaller versions of itself?**
 
 ## Complexity Cheat Sheet
 
-| Complexity     | Name         | Example                        |
-|---------------|--------------|--------------------------------|
-| $O(1)$        | Constant     | Hash table lookup              |
-| $O(\log n)$   | Logarithmic  | Binary search                  |
-| $O(n)$        | Linear       | Linear search                  |
-| $O(n \log n)$ | Linearithmic | Merge sort, Quick sort         |
-| $O(n^2)$      | Quadratic    | Bubble sort, nested loops      |
-| $O(2^n)$      | Exponential  | Naive Fibonacci, power set     |
-| $O(n!)$       | Factorial    | Brute-force permutations       |
+| Notation       | Name          | Example                              |
+|---------------|---------------|--------------------------------------|
+| $O(1)$        | Constant      | Hash table lookup, array access      |
+| $O(\log n)$   | Logarithmic   | Binary search                        |
+| $O(n)$        | Linear        | Linear search, single loop           |
+| $O(n \log n)$ | Linearithmic  | Merge sort, efficient sorting        |
+| $O(n^2)$      | Quadratic     | Bubble sort, nested loops            |
+| $O(2^n)$      | Exponential   | Naive recursion, power set           |
+| $O(n!)$       | Factorial     | Brute-force permutations             |
+
+The jump between these categories is dramatic. For $n = 1{,}000{,}000$: a linear algorithm does 1 million operations, a quadratic one does 1 trillion, and an exponential one... would outlast the universe.
 
 ## Where to Go From Here
 
-This guide covers the foundations. To go deeper:
+This guide covers the foundational building blocks. To deepen your understanding:
 
-- **Practice**: Solve problems on LeetCode, HackerRank, or Codeforces
-- **Learn advanced structures**: AVL trees, Red-Black trees, Tries, Segment trees
-- **Study graph algorithms**: Dijkstra's, A*, topological sort, minimum spanning trees
-- **Master DP patterns**: LCS, edit distance, matrix chain multiplication
+- **Practice problem-solving** on LeetCode, HackerRank, or Codeforces — reading about data structures isn't enough; you need to use them
+- **Learn advanced structures** like tries (for prefix search), segment trees (for range queries), and disjoint sets (for connected components)
+- **Study graph algorithms** like Dijkstra's shortest path, A* search, and topological sort
+- **Master DP patterns** — longest common subsequence, edit distance, and matrix chain multiplication
 
-The key insight is that **choosing the right data structure is often more important than writing clever code**. A hash table turns an $O(n)$ search into $O(1)$. A heap turns finding the minimum from $O(n)$ to $O(1)$. Know your tools, and the solutions become obvious.
+The most important takeaway: **choosing the right data structure often matters more than writing clever code**. A hash table turns an $O(n)$ search into $O(1)$. A heap makes finding the minimum $O(1)$ instead of $O(n)$. Know your tools, and the solutions become obvious.
