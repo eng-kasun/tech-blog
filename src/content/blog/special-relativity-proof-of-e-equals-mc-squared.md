@@ -11,7 +11,7 @@ draft: false
 
 ## The Equation That Changed Everything
 
-In 1905, a 26-year-old patent clerk in Bern, Switzerland, published four papers that would reshape physics forever. Among them was a three-page addendum titled *"Does the Inertia of a Body Depend Upon Its Energy Content?"* — the paper that gave us **E = mc²**.
+In 1905, a 26-year-old patent clerk in Bern, Switzerland, published four papers that would reshape physics forever. Among them was a three-page addendum titled *"Does the Inertia of a Body Depend Upon Its Energy Content?"* — the paper that gave us $E = mc^2$.
 
 This deceptively simple equation tells us something profound: **mass and energy are the same thing**, expressed in different units. A tiny amount of matter contains an astronomical amount of energy, because $c^2$ — the speed of light squared — is an enormous number: roughly $9 \times 10^{16} \text{ m}^2/\text{s}^2$.
 
@@ -108,7 +108,7 @@ $$E^2 = (pc)^2 + (mc^2)^2$$
 
 For a particle at rest ($p = 0$), this reduces to $E = mc^2$. For a massless particle like a photon ($m = 0$), it gives $E = pc$, which is exactly the energy-momentum relation for light.
 
-This equation is arguably more fundamental than E = mc² itself, and it unifies massive and massless particles in a single framework.
+This equation is arguably more fundamental than $E = mc^2$ itself, and it unifies massive and massless particles in a single framework.
 
 ## What Does It Actually Mean?
 
