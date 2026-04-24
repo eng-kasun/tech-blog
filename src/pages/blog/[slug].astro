@@ -286,11 +286,11 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', { year: 'numeri
     }
 
     function initCodeRunners() {
-      const codeBlocks = document.querySelectorAll('.prose pre > code.language-python');
+      const preTags = document.querySelectorAll('.prose pre[data-language="python"]');
 
-      codeBlocks.forEach((codeEl) => {
-        const pre = codeEl.parentElement;
-        if (!pre || pre.closest('.code-runner-wrapper')) return;
+      preTags.forEach((pre) => {
+        const codeEl = pre.querySelector('code');
+        if (!codeEl || pre.closest('.code-runner-wrapper')) return;
 
         const originalCode = (codeEl as HTMLElement).innerText;
 
