@@ -84,4 +84,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   .prose blockquote { @apply border-l-4 border-primary-500 pl-4 italic text-dark-200 my-4; }
   .prose img { @apply rounded-lg my-6; }
   .prose strong { @apply text-white font-semibold; }
+  .prose table { @apply w-full my-6 text-sm; border-collapse: separate; border-spacing: 0; }
+  .prose thead th { @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-dark-200 bg-dark-700 border-b border-dark-500; }
+  .prose thead th:first-child { @apply rounded-tl-lg; }
+  .prose thead th:last-child { @apply rounded-tr-lg; }
+  .prose tbody td { @apply px-4 py-3 border-b border-dark-600/50; }
+  .prose tbody tr { @apply transition-colors duration-150; }
+  .prose tbody tr:hover { @apply bg-dark-700/50; }
+  .prose tbody tr:last-child td { @apply border-b-0; }
+  .prose tbody tr:last-child td:first-child { @apply rounded-bl-lg; }
+  .prose tbody tr:last-child td:last-child { @apply rounded-br-lg; }
+  .complexity-badge { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold font-mono; }
+  .complexity-green { @apply bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/30; }
+  .complexity-lime { @apply bg-lime-500/15 text-lime-400 ring-1 ring-lime-500/30; }
+  .complexity-yellow { @apply bg-yellow-500/15 text-yellow-400 ring-1 ring-yellow-500/30; }
+  .complexity-amber { @apply bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30; }
+  .complexity-orange { @apply bg-orange-500/15 text-orange-400 ring-1 ring-orange-500/30; }
+  .complexity-red { @apply bg-red-500/15 text-red-400 ring-1 ring-red-500/30; }
+  .complexity-rose { @apply bg-rose-500/15 text-rose-400 ring-1 ring-rose-500/30; }
+  .stable-yes { @apply text-emerald-400; }
+  .stable-no { @apply text-red-400; }
 </style>

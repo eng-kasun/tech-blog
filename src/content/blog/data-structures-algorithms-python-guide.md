@@ -373,11 +373,44 @@ print(quick_sort([10, 7, 8, 9, 1]))  # [1, 7, 8, 9, 10]
 
 ### Comparison
 
-| Algorithm  | Best           | Average        | Worst          | Space        | Stable |
-|-----------|----------------|----------------|----------------|-------------|--------|
-| Bubble    | $O(n)$         | $O(n^2)$       | $O(n^2)$       | $O(1)$      | Yes    |
-| Merge     | $O(n \log n)$  | $O(n \log n)$  | $O(n \log n)$  | $O(n)$      | Yes    |
-| Quick     | $O(n \log n)$  | $O(n \log n)$  | $O(n^2)$       | $O(\log n)$ | No     |
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Best</th>
+<th>Average</th>
+<th>Worst</th>
+<th>Space</th>
+<th>Stable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bubble Sort</strong></td>
+<td><span class="complexity-badge complexity-yellow">O(n)</span></td>
+<td><span class="complexity-badge complexity-orange">O(n²)</span></td>
+<td><span class="complexity-badge complexity-orange">O(n²)</span></td>
+<td><span class="complexity-badge complexity-green">O(1)</span></td>
+<td><span class="stable-yes">✓ Yes</span></td>
+</tr>
+<tr>
+<td><strong>Merge Sort</strong></td>
+<td><span class="complexity-badge complexity-amber">O(n log n)</span></td>
+<td><span class="complexity-badge complexity-amber">O(n log n)</span></td>
+<td><span class="complexity-badge complexity-amber">O(n log n)</span></td>
+<td><span class="complexity-badge complexity-yellow">O(n)</span></td>
+<td><span class="stable-yes">✓ Yes</span></td>
+</tr>
+<tr>
+<td><strong>Quick Sort</strong></td>
+<td><span class="complexity-badge complexity-amber">O(n log n)</span></td>
+<td><span class="complexity-badge complexity-amber">O(n log n)</span></td>
+<td><span class="complexity-badge complexity-orange">O(n²)</span></td>
+<td><span class="complexity-badge complexity-lime">O(log n)</span></td>
+<td><span class="stable-no">✗ No</span></td>
+</tr>
+</tbody>
+</table>
 
 ## Searching: Finding What You Need
 
@@ -436,17 +469,62 @@ The DP mindset applies to hundreds of problems: shortest paths, text alignment, 
 
 ## Complexity Cheat Sheet
 
-| Notation       | Name          | Example                              |
-|---------------|---------------|--------------------------------------|
-| $O(1)$        | Constant      | Hash table lookup, array access      |
-| $O(\log n)$   | Logarithmic   | Binary search                        |
-| $O(n)$        | Linear        | Linear search, single loop           |
-| $O(n \log n)$ | Linearithmic  | Merge sort, efficient sorting        |
-| $O(n^2)$      | Quadratic     | Bubble sort, nested loops            |
-| $O(2^n)$      | Exponential   | Naive recursion, power set           |
-| $O(n!)$       | Factorial     | Brute-force permutations             |
+<table>
+<thead>
+<tr>
+<th>Complexity</th>
+<th>Name</th>
+<th>Operations (n=1M)</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="complexity-badge complexity-green">O(1)</span></td>
+<td><strong>Constant</strong></td>
+<td>1</td>
+<td>Hash table lookup, array access</td>
+</tr>
+<tr>
+<td><span class="complexity-badge complexity-lime">O(log n)</span></td>
+<td><strong>Logarithmic</strong></td>
+<td>20</td>
+<td>Binary search</td>
+</tr>
+<tr>
+<td><span class="complexity-badge complexity-yellow">O(n)</span></td>
+<td><strong>Linear</strong></td>
+<td>1,000,000</td>
+<td>Linear search, single loop</td>
+</tr>
+<tr>
+<td><span class="complexity-badge complexity-amber">O(n log n)</span></td>
+<td><strong>Linearithmic</strong></td>
+<td>20,000,000</td>
+<td>Merge sort, efficient sorting</td>
+</tr>
+<tr>
+<td><span class="complexity-badge complexity-orange">O(n²)</span></td>
+<td><strong>Quadratic</strong></td>
+<td>1,000,000,000,000</td>
+<td>Bubble sort, nested loops</td>
+</tr>
+<tr>
+<td><span class="complexity-badge complexity-red">O(2ⁿ)</span></td>
+<td><strong>Exponential</strong></td>
+<td>🤯 Outlasts the universe</td>
+<td>Naive recursion, power set</td>
+</tr>
+<tr>
+<td><span class="complexity-badge complexity-rose">O(n!)</span></td>
+<td><strong>Factorial</strong></td>
+<td>🤯 Beyond comprehension</td>
+<td>Brute-force permutations</td>
+</tr>
+</tbody>
+</table>
 
-The jump between these categories is dramatic. For $n = 1{,}000{,}000$: a linear algorithm does 1 million operations, a quadratic one does 1 trillion, and an exponential one... would outlast the universe.
+The jump between these categories is dramatic — from 1 operation to outlasting the universe, the right algorithm choice can make an impossible problem trivial.
 
 ## Where to Go From Here
 
