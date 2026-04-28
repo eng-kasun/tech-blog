@@ -9,13 +9,11 @@ const navItems = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 backdrop-blur-xl bg-dark-900/80 border-b border-dark-500/50">
+<header class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-500/40">
   <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-    <a href="/tech-blog/" class="flex items-center gap-2 group">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center group-hover:animate-glow transition-all">
-        <span class="text-white font-bold text-sm">TV</span>
-      </div>
-      <span class="font-display font-bold text-xl bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">
+    <a href="/tech-blog/" class="flex items-center gap-2.5 group">
+      <span class="text-primary-300 text-2xl leading-none" aria-hidden="true">☙</span>
+      <span class="font-display font-semibold text-xl text-dark-50 group-hover:text-primary-300 transition-colors">
         TechVerse
       </span>
     </a>
@@ -27,8 +25,8 @@ const currentPath = Astro.url.pathname;
           class:list={[
             'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
             currentPath === item.href || (item.href !== '/tech-blog/' && currentPath.startsWith(item.href))
-              ? 'bg-primary-500/15 text-primary-300'
-              : 'text-dark-200 hover:text-white hover:bg-dark-600/50',
+              ? 'text-primary-300 bg-primary-500/10'
+              : 'text-dark-200 hover:text-dark-50 hover:bg-dark-600/40',
           ]}
         >
           {item.label}
@@ -39,7 +37,7 @@ const currentPath = Astro.url.pathname;
     <!-- Mobile menu button -->
     <button
       id="mobile-menu-btn"
-      class="md:hidden p-2 rounded-lg text-dark-200 hover:text-white hover:bg-dark-600/50 transition-colors"
+      class="md:hidden p-2 rounded-lg text-dark-200 hover:text-dark-50 hover:bg-dark-600/40 transition-colors"
       aria-label="Toggle menu"
     >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,7 +47,7 @@ const currentPath = Astro.url.pathname;
   </nav>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-dark-500/50 bg-dark-800/95 backdrop-blur-xl">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-dark-500/40 bg-dark-800/95 backdrop-blur-sm">
     <div class="px-4 py-3 space-y-1">
       {navItems.map((item) => (
         <a
@@ -57,8 +55,8 @@ const currentPath = Astro.url.pathname;
           class:list={[
             'block px-4 py-2.5 rounded-lg text-sm font-medium transition-all',
             currentPath === item.href
-              ? 'bg-primary-500/15 text-primary-300'
-              : 'text-dark-200 hover:text-white hover:bg-dark-600/50',
+              ? 'text-primary-300 bg-primary-500/10'
+              : 'text-dark-200 hover:text-dark-50 hover:bg-dark-600/40',
           ]}
         >
           {item.label}
