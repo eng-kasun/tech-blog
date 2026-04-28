@@ -12,8 +12,8 @@ const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
     <div class="mb-8">
       <div class="rule-thick mb-1"></div>
       <div class="rule-thin mb-4"></div>
-      <h1 class="font-headline text-4xl font-black text-ink-800 mb-2">All Articles</h1>
-      <p class="text-ink-400 text-sm font-body">Complete archive of dispatches from The TechVerse.</p>
+      <h1 class="font-headline text-4xl font-black text-paper-100 mb-2">All Articles</h1>
+      <p class="text-paper-500 text-sm font-body">Complete archive of dispatches from The TechVerse.</p>
     </div>
 
     {allPosts.length > 0 ? (
@@ -30,8 +30,8 @@ const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
         ))}
       </div>
     ) : (
-      <div class="text-center py-20 border border-ink-200">
-        <p class="text-ink-400 text-lg font-headline italic">No dispatches yet.</p>
+      <div class="text-center py-20 border border-dark-300">
+        <p class="text-paper-500 text-lg font-headline italic">No dispatches yet.</p>
       </div>
     )}
   </div>

@@ -7,18 +7,18 @@ const year = new Date().getFullYear();
     <div class="rule-thick"></div>
     <div class="py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
       <div>
-        <h3 class="font-headline font-bold text-ink-800 text-lg mb-3">The TechVerse</h3>
-        <p class="text-ink-400 text-sm leading-relaxed font-body">
+        <h3 class="font-headline font-bold text-paper-100 text-lg mb-3">The TechVerse</h3>
+        <p class="text-paper-500 text-sm leading-relaxed font-body">
           Exploring the frontiers of technology, science, and the natural world. Every article composed by artificial intelligence.
         </p>
       </div>
 
       <div>
-        <h3 class="font-sans font-bold text-ink-800 text-xs uppercase tracking-widest mb-3">Sections</h3>
+        <h3 class="font-sans font-bold text-paper-100 text-xs uppercase tracking-widest mb-3">Sections</h3>
         <ul class="space-y-1.5">
           {['Computer Science', 'Space Technology', 'Artificial Intelligence', 'Quantum Physics', 'Nature'].map(cat => (
             <li>
-              <a href={`/tech-blog/categories/${cat.toLowerCase().replace(/\s+/g, '-')}/`} class="text-ink-400 hover:text-ink-700 text-sm font-body transition-colors">
+              <a href={`/tech-blog/categories/${cat.toLowerCase().replace(/\s+/g, '-')}/`} class="text-paper-500 hover:text-paper-200 text-sm font-body transition-colors">
                 {cat}
               </a>
             </li>
@@ -27,13 +27,13 @@ const year = new Date().getFullYear();
       </div>
 
       <div>
-        <h3 class="font-sans font-bold text-ink-800 text-xs uppercase tracking-widest mb-3">Colophon</h3>
-        <ul class="space-y-1.5 text-sm text-ink-400 font-body">
+        <h3 class="font-sans font-bold text-paper-100 text-xs uppercase tracking-widest mb-3">Colophon</h3>
+        <ul class="space-y-1.5 text-sm text-paper-500 font-body">
           <li>Built with Astro</li>
           <li>Written by Google Gemini</li>
           <li>Hosted on GitHub Pages</li>
           <li>
-            <a href="https://github.com" class="hover:text-ink-700 transition-colors underline underline-offset-2">
+            <a href="https://github.com" class="hover:text-paper-200 transition-colors underline underline-offset-2">
               Source on GitHub
             </a>
           </li>
@@ -43,7 +43,7 @@ const year = new Date().getFullYear();
 
     <div class="rule-thin"></div>
     <div class="py-4 text-center">
-      <p class="text-ink-300 text-xs font-sans tracking-wider uppercase">
+      <p class="text-dark-50 text-xs font-sans tracking-wider uppercase">
         &copy; {year} The TechVerse &middot; All Rights Reserved &middot; Price: Free
       </p>
     </div>

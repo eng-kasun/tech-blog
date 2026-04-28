@@ -1,25 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
     <linearGradient id="parchment" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f5edd9"/>
-      <stop offset="100%" stop-color="#ebe0c4"/>
+      <stop offset="0%" stop-color="#1e1a15"/>
+      <stop offset="100%" stop-color="#100e0b"/>
     </linearGradient>
   </defs>
 
-  <!-- Parchment background -->
+  <!-- Dark background -->
   <rect width="512" height="512" rx="80" fill="url(#parchment)"/>
-  <rect x="1.5" y="1.5" width="509" height="509" rx="79" fill="none" stroke="#3d352a" stroke-width="3"/>
+  <rect x="1.5" y="1.5" width="509" height="509" rx="79" fill="none" stroke="#4a4238" stroke-width="3"/>
 
   <!-- Inner border (newspaper frame) -->
-  <rect x="24" y="24" width="464" height="464" fill="none" stroke="#1f1b16" stroke-width="2"/>
-  <rect x="28" y="28" width="456" height="456" fill="none" stroke="#1f1b16" stroke-width="0.5"/>
+  <rect x="24" y="24" width="464" height="464" fill="none" stroke="#6e6558" stroke-width="2"/>
+  <rect x="28" y="28" width="456" height="456" fill="none" stroke="#6e6558" stroke-width="0.5"/>
 
   <!-- Top thick rule -->
-  <rect x="48" y="55" width="416" height="5" fill="#1f1b16"/>
-  <rect x="48" y="63" width="416" height="1.5" fill="#1f1b16"/>
+  <rect x="48" y="55" width="416" height="5" fill="#9a9080"/>
+  <rect x="48" y="63" width="416" height="1.5" fill="#9a9080"/>
 
-  <!-- "T" in bold serif — The TechVerse initial -->
-  <g fill="#1f1b16">
+  <!-- "T" in light color — The TechVerse initial -->
+  <g fill="#f5edd9">
     <!-- T crossbar -->
     <rect x="128" y="100" width="256" height="32" rx="2"/>
     <!-- Left serif -->
@@ -37,15 +37,15 @@
   </g>
 
   <!-- Bottom decorative rules -->
-  <rect x="48" y="400" width="416" height="1.5" fill="#1f1b16"/>
-  <rect x="48" y="406" width="416" height="5" fill="#1f1b16"/>
+  <rect x="48" y="400" width="416" height="1.5" fill="#9a9080"/>
+  <rect x="48" y="406" width="416" height="5" fill="#9a9080"/>
 
   <!-- "EST. 2025" at bottom -->
-  <text x="256" y="445" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#3d352a" letter-spacing="8">EST. 2025</text>
+  <text x="256" y="445" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#c8c0b0" letter-spacing="8">EST. 2025</text>
 
   <!-- Small decorative dots -->
-  <circle cx="48" cy="57" r="3" fill="#1f1b16"/>
-  <circle cx="464" cy="57" r="3" fill="#1f1b16"/>
-  <circle cx="48" cy="408" r="3" fill="#1f1b16"/>
-  <circle cx="464" cy="408" r="3" fill="#1f1b16"/>
+  <circle cx="48" cy="57" r="3" fill="#9a9080"/>
+  <circle cx="464" cy="57" r="3" fill="#9a9080"/>
+  <circle cx="48" cy="408" r="3" fill="#9a9080"/>
+  <circle cx="464" cy="408" r="3" fill="#9a9080"/>
 </svg>

@@ -28,7 +28,7 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', { year: 'numeri
 <BaseLayout title={post.data.title} description={post.data.description}>
   <article class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
     <!-- Back link -->
-    <a href="/tech-blog/blog/" class="inline-flex items-center gap-1 text-ink-300 hover:text-ink-700 text-xs font-sans uppercase tracking-widest mb-6 transition-colors">
+    <a href="/tech-blog/blog/" class="inline-flex items-center gap-1 text-dark-50 hover:text-paper-200 text-xs font-sans uppercase tracking-widest mb-6 transition-colors">
       ← Back to articles
     </a>
 
@@ -41,22 +41,22 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', { year: 'numeri
         <span class="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-accent">
           {icon} {post.data.category.replace(/-/g, ' ')}
         </span>
-        <span class="text-ink-200">|</span>
-        <time class="text-ink-300 text-[11px] font-sans">{formattedDate}</time>
+        <span class="text-dark-100">|</span>
+        <time class="text-dark-50 text-[11px] font-sans">{formattedDate}</time>
       </div>
 
-      <h1 class="font-headline text-3xl sm:text-4xl md:text-5xl font-black text-ink-800 leading-tight mb-4">
+      <h1 class="font-headline text-3xl sm:text-4xl md:text-5xl font-black text-paper-100 leading-tight mb-4">
         {post.data.title}
       </h1>
 
-      <p class="text-ink-500 text-lg leading-relaxed font-body italic">
+      <p class="text-paper-400 text-lg leading-relaxed font-body italic">
         {post.data.description}
       </p>
 
       {post.data.tags.length > 0 && (
         <div class="flex flex-wrap gap-2 mt-4">
           {post.data.tags.map((tag: string) => (
-            <span class="px-2 py-0.5 border border-ink-200 text-ink-400 text-[11px] font-sans">#{tag}</span>
+            <span class="px-2 py-0.5 border border-dark-300 text-paper-500 text-[11px] font-sans">#{tag}</span>
           ))}
         </div>
       )}
@@ -64,11 +64,11 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', { year: 'numeri
       <div class="rule-thin mt-6"></div>
 
       {post.data.image && (
-        <div class="mt-6 border border-ink-200 overflow-hidden">
+        <div class="mt-6 border border-dark-300 overflow-hidden">
           <img
             src={post.data.image}
             alt={post.data.title}
-            class="w-full h-64 sm:h-80 md:h-96 object-cover grayscale"
+            class="w-full h-64 sm:h-80 md:h-96 object-cover grayscale sepia-[0.2] contrast-[1.1] brightness-[0.85]"
           />
         </div>
       )}
