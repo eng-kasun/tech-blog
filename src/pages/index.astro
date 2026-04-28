@@ -7,176 +7,175 @@ import { getCollection } from 'astro:content';
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const featuredPosts = allPosts.filter(p => p.data.featured).slice(0, 2);
-const latestPosts = allPosts.slice(0, 6);
+const featuredPost = allPosts[0];
+const sidebarPosts = allPosts.slice(1, 4);
+const morePosts = allPosts.slice(4, 10);
 
 const categories = [
-  { name: 'Computer Science', slug: 'computer-science', icon: '💻', gradient: 'from-blue-500 to-cyan-500' },
-  { name: 'Space Technology', slug: 'space-technology', icon: '🚀', gradient: 'from-violet-500 to-purple-500' },
-  { name: 'Artificial Intelligence', slug: 'artificial-intelligence', icon: '🤖', gradient: 'from-primary-500 to-accent-500' },
-  { name: 'Quantum Physics', slug: 'quantum-physics', icon: '⚛️', gradient: 'from-rose-500 to-orange-500' },
-  { name: 'Nature', slug: 'nature', icon: '🌿', gradient: 'from-green-500 to-emerald-500' },
+  { name: 'Computer Science', slug: 'computer-science', icon: '💻', gradient: '' },
+  { name: 'Space Technology', slug: 'space-technology', icon: '🚀', gradient: '' },
+  { name: 'Artificial Intelligence', slug: 'artificial-intelligence', icon: '🤖', gradient: '' },
+  { name: 'Quantum Physics', slug: 'quantum-physics', icon: '⚛️', gradient: '' },
+  { name: 'Nature', slug: 'nature', icon: '🌿', gradient: '' },
 ];
 
 const categoryCounts = categories.map(cat => ({
   ...cat,
   count: allPosts.filter(p => p.data.category === cat.slug).length,
 }));
+
+const today = new Date();
+const vol = today.getFullYear() - 2025 + 1;
+const issue = Math.ceil((today.getMonth() + 1) * 30 + today.getDate());
 ---
 
-<BaseLayout title="Home">
-  <!-- Hero Section -->
-  <section class="relative overflow-hidden">
-    <!-- Rich layered background -->
-    <div class="absolute inset-0">
-      <div class="absolute inset-0 bg-gradient-to-b from-dark-800/60 via-dark-900 to-dark-900"></div>
-      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary-500/10 rounded-full blur-[120px] animate-warm-glow"></div>
-      <div class="absolute top-40 right-0 w-[400px] h-[400px] bg-accent-500/8 rounded-full blur-[100px] animate-warm-glow" style="animation-delay: -4s;"></div>
-      <div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-primary-700/10 rounded-full blur-[80px]"></div>
-      <!-- Subtle grid pattern -->
-      <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(196,154,108,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(196,154,108,0.3) 1px, transparent 1px); background-size: 60px 60px;"></div>
+<BaseLayout title="Front Page">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+
+    {/* Volume / Issue line */}
+    <div class="flex items-center justify-between py-2 text-[10px] font-sans text-ink-300 uppercase tracking-[0.15em]">
+      <span>Vol. {vol} — No. {issue}</span>
+      <span>— ✦ —</span>
+      <span>{allPosts.length} Articles Published</span>
     </div>
 
-    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-24">
-      <div class="text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-300 text-sm font-medium mb-8 backdrop-blur-sm">
-          <span class="w-1.5 h-1.5 rounded-full bg-primary-400 animate-pulse"></span>
-          AI-Powered Knowledge Hub
+    <div class="rule-thick mb-1"></div>
+    <div class="rule-thin mb-6"></div>
+
+    {allPosts.length > 0 ? (
+      <>
+        {/* ── LEAD STORY + SIDEBAR ── */}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 mb-0">
+
+          {/* Lead story — 2 columns */}
+          <div class="md:col-span-2 md:pr-6 md:border-r border-ink-200 pb-6">
+            <a href={`/tech-blog/blog/${featuredPost.slug}/`} class="group block">
+              {featuredPost.data.image && (
+                <div class="mb-4 border border-ink-200 overflow-hidden">
+                  <img
+                    src={featuredPost.data.image}
+                    alt={featuredPost.data.title}
+                    class="w-full h-52 md:h-72 object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  />
+                </div>
+              )}
+              <span class="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-accent">
+                {featuredPost.data.category.replace(/-/g, ' ')} — Lead Story
+              </span>
+              <h2 class="font-headline font-black text-ink-800 text-3xl sm:text-4xl md:text-5xl leading-[1.1] mt-2 mb-3 group-hover:text-accent transition-colors">
+                {featuredPost.data.title}
+              </h2>
+              <p class="text-ink-500 font-body text-base leading-relaxed mb-3">
+                {featuredPost.data.description}
+              </p>
+              <div class="flex items-center gap-2 text-[11px] font-sans text-ink-300">
+                <time>{featuredPost.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+                <span>·</span>
+                <span class="italic">Continue reading →</span>
+              </div>
+            </a>
+          </div>
+
+          {/* Sidebar — 1 column */}
+          <div class="md:pl-6 pt-6 md:pt-0">
+            <h3 class="font-sans font-bold text-[10px] uppercase tracking-[0.2em] text-ink-400 mb-4 pb-2 border-b-2 border-ink-700">
+              Also in this Edition
+            </h3>
+            <div class="space-y-4">
+              {sidebarPosts.map((post, i) => (
+                <a href={`/tech-blog/blog/${post.slug}/`} class="group block pb-4 border-b border-dotted border-ink-200 last:border-b-0">
+                  <span class="text-[10px] font-sans font-bold uppercase tracking-[0.15em] text-accent">
+                    {post.data.category.replace(/-/g, ' ')}
+                  </span>
+                  <h4 class="font-headline font-bold text-ink-800 text-base leading-snug mt-1 group-hover:text-accent transition-colors">
+                    {post.data.title}
+                  </h4>
+                  <p class="text-ink-400 text-xs font-body mt-1 line-clamp-2">
+                    {post.data.description}
+                  </p>
+                </a>
+              ))}
+            </div>
+
+            {/* Info box — newspaper ad style */}
+            <div class="mt-6 border-2 border-ink-700 p-4 text-center">
+              <p class="font-headline font-black text-ink-800 text-lg leading-tight">AI-Powered</p>
+              <p class="font-headline italic text-ink-500 text-sm mt-1">Every article written</p>
+              <p class="font-headline italic text-ink-500 text-sm">by artificial intelligence</p>
+              <div class="rule-dotted my-3"></div>
+              <p class="font-sans text-[10px] uppercase tracking-widest text-ink-400">Google Gemini 2.0 Flash</p>
+            </div>
+          </div>
         </div>
 
-        <h1 class="font-display text-5xl sm:text-6xl md:text-7xl font-bold mb-6 leading-[1.1] text-dark-50">
-          Exploring the<br />
-          <span class="bg-gradient-to-r from-primary-300 via-primary-200 to-accent-300 bg-clip-text text-transparent">Frontiers</span>
-          of Science
-        </h1>
+        {/* ── SECTIONS / CATEGORIES ── */}
+        <div class="rule-thick mt-6 mb-1"></div>
+        <div class="rule-thin mb-4"></div>
 
-        <p class="text-lg sm:text-xl text-dark-200 mb-12 leading-relaxed max-w-2xl mx-auto">
-          Deep dives into computer science, space exploration, artificial intelligence,
-          quantum physics, and the natural world.
-        </p>
-
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/tech-blog/blog/" class="group inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 text-white font-semibold transition-all shadow-lg shadow-primary-900/40 hover:shadow-primary-800/60">
-            Explore Articles
-            <span class="ml-2 group-hover:translate-x-0.5 transition-transform">→</span>
-          </a>
-          <a href="/tech-blog/categories/" class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg border border-dark-400/60 text-dark-100 hover:bg-dark-700/60 hover:border-dark-300 font-medium transition-all backdrop-blur-sm">
-            Browse Categories
-          </a>
-        </div>
-
-        <!-- Stats row -->
-        <div class="mt-16 flex items-center justify-center gap-8 sm:gap-12">
-          <div class="text-center">
-            <div class="text-2xl font-display font-bold text-primary-300">{latestPosts.length}</div>
-            <div class="text-xs text-dark-300 uppercase tracking-wider mt-1">Articles</div>
-          </div>
-          <div class="w-px h-8 bg-dark-500/40"></div>
-          <div class="text-center">
-            <div class="text-2xl font-display font-bold text-primary-300">5</div>
-            <div class="text-xs text-dark-300 uppercase tracking-wider mt-1">Topics</div>
-          </div>
-          <div class="w-px h-8 bg-dark-500/40"></div>
-          <div class="text-center">
-            <div class="text-2xl font-display font-bold text-primary-300">AI</div>
-            <div class="text-xs text-dark-300 uppercase tracking-wider mt-1">Powered</div>
+        <div class="mb-6">
+          <h3 class="font-sans font-bold text-[10px] uppercase tracking-[0.2em] text-ink-400 mb-4">Sections</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+            {categoryCounts.map(cat => (
+              <CategoryCard {...cat} />
+            ))}
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Bottom fade -->
-    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/30 to-transparent"></div>
-  </section>
+        {/* ── MORE STORIES ── */}
+        {morePosts.length > 0 && (
+          <>
+            <div class="rule-thick mt-6 mb-1"></div>
+            <div class="rule-thin mb-4"></div>
 
-  <!-- Categories Section -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="flex items-center justify-between mb-10">
-      <div>
-        <h2 class="font-display text-3xl font-bold text-dark-50">Explore Topics</h2>
-        <p class="text-dark-300 text-sm mt-1">Browse articles by category</p>
-      </div>
-      <a href="/tech-blog/categories/" class="text-primary-300 hover:text-primary-200 text-sm font-medium transition-colors flex items-center gap-1">
-        View all <span>→</span>
-      </a>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-      {categoryCounts.map(cat => (
-        <CategoryCard {...cat} />
-      ))}
-    </div>
-  </section>
+            <h3 class="font-sans font-bold text-[10px] uppercase tracking-[0.2em] text-ink-400 mb-6">
+              More Stories
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+              {morePosts.map(post => (
+                <PostCard
+                  title={post.data.title}
+                  description={post.data.description}
+                  date={post.data.date.toISOString()}
+                  category={post.data.category}
+                  slug={post.slug}
+                  image={post.data.image}
+                />
+              ))}
+            </div>
+          </>
+        )}
 
-  <!-- Divider -->
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="h-px bg-gradient-to-r from-transparent via-dark-500/40 to-transparent"></div>
-  </div>
+        {/* ── HOW IT WORKS — classified ad style ── */}
+        <div class="rule-thick mt-8 mb-1"></div>
+        <div class="rule-thin mb-4"></div>
 
-  <!-- Latest Posts -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="flex items-center justify-between mb-10">
-      <div>
-        <h2 class="font-display text-3xl font-bold text-dark-50">Latest Articles</h2>
-        <p class="text-dark-300 text-sm mt-1">Fresh insights from our AI research pipeline</p>
-      </div>
-      <a href="/tech-blog/blog/" class="text-primary-300 hover:text-primary-200 text-sm font-medium transition-colors flex items-center gap-1">
-        View all <span>→</span>
-      </a>
-    </div>
-
-    {latestPosts.length > 0 ? (
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {latestPosts.map((post, i) => (
-          <PostCard
-            title={post.data.title}
-            description={post.data.description}
-            date={post.data.date.toISOString()}
-            category={post.data.category}
-            slug={post.slug}
-            image={post.data.image}
-            featured={i === 0 && post.data.featured}
-          />
-        ))}
-      </div>
+        <h3 class="font-sans font-bold text-[10px] uppercase tracking-[0.2em] text-ink-400 mb-6 text-center">
+          How The TechVerse Works
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 mb-8">
+          {[
+            { step: 'I.', title: 'Submit a Topic', desc: 'Open a GitHub Issue with your idea and label it "generate-post"' },
+            { step: 'II.', title: 'AI Composes', desc: 'Google Gemini researches and writes a comprehensive, well-structured article' },
+            { step: 'III.', title: 'Auto Published', desc: 'The article is committed, built, and deployed to this gazette automatically' },
+          ].map((item, i) => (
+            <div class:list={[
+              'p-5 text-center',
+              i < 2 ? 'md:border-r border-ink-200' : '',
+            ]}>
+              <span class="font-headline font-bold text-3xl text-ink-200 block mb-2">{item.step}</span>
+              <h4 class="font-headline font-bold text-ink-800 text-base mb-2">{item.title}</h4>
+              <p class="text-ink-400 text-sm font-body leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </>
     ) : (
-      <div class="text-center py-20 rounded-lg border border-dashed border-dark-500/40 bg-dark-800/30">
-        <div class="text-4xl mb-4">📝</div>
-        <p class="text-dark-300 text-lg">No posts yet.</p>
-        <p class="text-dark-400 text-sm mt-1">Create a GitHub Issue to generate your first AI-powered article!</p>
+      <div class="text-center py-20 border border-ink-200">
+        <p class="font-headline text-ink-400 text-lg italic">No dispatches yet.</p>
+        <p class="text-ink-300 text-sm font-body mt-2">Create a GitHub Issue to generate your first article.</p>
       </div>
     )}
-  </section>
 
-  <!-- Divider -->
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="h-px bg-gradient-to-r from-transparent via-dark-500/40 to-transparent"></div>
+    <div class="rule-thin mb-4"></div>
   </div>
-
-  <!-- How It Works -->
-  <section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="text-center mb-14">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-dark-700/60 border border-dark-500/30 text-dark-200 text-xs font-medium uppercase tracking-wider mb-4">
-        How it works
-      </div>
-      <h2 class="font-display text-3xl font-bold text-dark-50">From Idea to Published Article</h2>
-      <p class="text-dark-300 text-sm mt-2 max-w-lg mx-auto">Our fully automated AI pipeline turns your topic ideas into well-researched, comprehensive articles</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {[
-        { step: '01', title: 'Create an Issue', desc: 'Open a GitHub Issue with your topic idea and label it "generate-post"', icon: '📝' },
-        { step: '02', title: 'AI Generates Content', desc: 'Google Gemini writes a comprehensive, well-structured article automatically', icon: '🤖' },
-        { step: '03', title: 'Auto Published', desc: 'The article is committed, built, and deployed to your live site in minutes', icon: '🚀' },
-      ].map((item, i) => (
-        <div class="group relative p-8 rounded-xl bg-gradient-to-b from-dark-700/40 to-dark-800/20 border border-dark-500/30 hover:border-primary-500/20 transition-all duration-300">
-          <div class="flex items-center gap-3 mb-5">
-            <span class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-500/10 text-primary-300 font-mono text-sm font-bold">{item.step}</span>
-            <div class="flex-1 h-px bg-dark-500/30"></div>
-          </div>
-          <span class="text-3xl mb-4 block">{item.icon}</span>
-          <h3 class="font-display font-semibold text-dark-50 text-lg mb-3">{item.title}</h3>
-          <p class="text-dark-200 text-sm leading-relaxed">{item.desc}</p>
-        </div>
-      ))}
-    </div>
-  </section>
 </BaseLayout>

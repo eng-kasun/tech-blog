@@ -20,13 +20,15 @@ const categoryCounts = categories.map(cat => ({
 ---
 
 <BaseLayout title="Categories">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="mb-12">
-      <h1 class="font-display text-4xl font-bold text-dark-50 mb-4">Categories</h1>
-      <p class="text-dark-200 text-lg">Explore our content organized by topic.</p>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+    <div class="mb-8">
+      <div class="rule-thick mb-1"></div>
+      <div class="rule-thin mb-4"></div>
+      <h1 class="font-headline text-4xl font-black text-ink-800 mb-2">Sections</h1>
+      <p class="text-ink-400 text-sm font-body">Browse The TechVerse by topic.</p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
       {categoryCounts.map(cat => (
         <CategoryCard {...cat} />
       ))}

@@ -8,14 +8,16 @@ const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
 ---
 
 <BaseLayout title="All Articles">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="mb-12">
-      <h1 class="font-display text-4xl font-bold text-dark-50 mb-4">All Articles</h1>
-      <p class="text-dark-200 text-lg">Browse our complete collection of AI-generated deep dives.</p>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+    <div class="mb-8">
+      <div class="rule-thick mb-1"></div>
+      <div class="rule-thin mb-4"></div>
+      <h1 class="font-headline text-4xl font-black text-ink-800 mb-2">All Articles</h1>
+      <p class="text-ink-400 text-sm font-body">Complete archive of dispatches from The TechVerse.</p>
     </div>
 
     {allPosts.length > 0 ? (
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
         {allPosts.map(post => (
           <PostCard
             title={post.data.title}
@@ -28,8 +30,8 @@ const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
         ))}
       </div>
     ) : (
-      <div class="text-center py-20 rounded-lg border border-dashed border-dark-500">
-        <p class="text-dark-300 text-lg">No posts yet. Create a GitHub Issue to generate your first article!</p>
+      <div class="text-center py-20 border border-ink-200">
+        <p class="text-ink-400 text-lg font-headline italic">No dispatches yet.</p>
       </div>
     )}
   </div>
