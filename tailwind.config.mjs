@@ -48,7 +48,7 @@ export default {
         },
       },
       fontFamily: {
-        blackletter: ['UnifrakturMaguntia', 'Old English Text MT', 'serif'],
+        blackletter: ['Old English Text MT', 'UnifrakturMaguntia', 'serif'],
         headline: ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
         body: ['Lora', 'Georgia', 'Times New Roman', 'serif'],
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
