@@ -42,7 +42,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Source Serif 4', 'Georgia', 'serif'],
+        sans: ['-apple-system', 'BlinkMacSystemFont', 'Inter', 'SF Pro Text', 'Segoe UI', 'system-ui', 'sans-serif'],
         display: ['Playfair Display', 'Georgia', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },

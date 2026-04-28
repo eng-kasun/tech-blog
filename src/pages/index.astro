@@ -27,48 +27,77 @@ const categoryCounts = categories.map(cat => ({
 <BaseLayout title="Home">
   <!-- Hero Section -->
   <section class="relative overflow-hidden">
-    <!-- Warm subtle glow -->
+    <!-- Rich layered background -->
     <div class="absolute inset-0">
-      <div class="absolute top-20 left-1/4 w-96 h-96 bg-primary-500/8 rounded-full blur-3xl animate-warm-glow"></div>
-      <div class="absolute top-32 right-1/4 w-80 h-80 bg-accent-500/6 rounded-full blur-3xl animate-warm-glow" style="animation-delay: -4s;"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-dark-800/60 via-dark-900 to-dark-900"></div>
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary-500/10 rounded-full blur-[120px] animate-warm-glow"></div>
+      <div class="absolute top-40 right-0 w-[400px] h-[400px] bg-accent-500/8 rounded-full blur-[100px] animate-warm-glow" style="animation-delay: -4s;"></div>
+      <div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-primary-700/10 rounded-full blur-[80px]"></div>
+      <!-- Subtle grid pattern -->
+      <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(196,154,108,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(196,154,108,0.3) 1px, transparent 1px); background-size: 60px 60px;"></div>
     </div>
 
-    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-24">
       <div class="text-center">
-        <div class="ornament mb-8">❧</div>
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-300 text-sm font-medium mb-8 backdrop-blur-sm">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary-400 animate-pulse"></span>
+          AI-Powered Knowledge Hub
+        </div>
 
-        <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight text-dark-50">
-          Exploring the
-          <em class="text-primary-300 not-italic">Frontiers</em><br />
-          of Science &amp; Technology
+        <h1 class="font-display text-5xl sm:text-6xl md:text-7xl font-bold mb-6 leading-[1.1] text-dark-50">
+          Exploring the<br />
+          <span class="bg-gradient-to-r from-primary-300 via-primary-200 to-accent-300 bg-clip-text text-transparent">Frontiers</span>
+          of Science
         </h1>
 
-        <p class="text-lg text-dark-200 mb-10 leading-relaxed max-w-2xl mx-auto">
-          Dive into the latest breakthroughs in computer science, space exploration, artificial intelligence,
-          quantum physics, and the wonders of nature.
+        <p class="text-lg sm:text-xl text-dark-200 mb-12 leading-relaxed max-w-2xl mx-auto">
+          Deep dives into computer science, space exploration, artificial intelligence,
+          quantum physics, and the natural world.
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/tech-blog/blog/" class="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-primary-500 hover:bg-primary-600 text-white font-medium transition-colors">
+          <a href="/tech-blog/blog/" class="group inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 text-white font-semibold transition-all shadow-lg shadow-primary-900/40 hover:shadow-primary-800/60">
             Explore Articles
-            <span class="ml-2">→</span>
+            <span class="ml-2 group-hover:translate-x-0.5 transition-transform">→</span>
           </a>
-          <a href="/tech-blog/categories/" class="inline-flex items-center justify-center px-7 py-3 rounded-lg border border-dark-400 text-dark-100 hover:bg-dark-600/40 hover:border-dark-300 font-medium transition-all">
+          <a href="/tech-blog/categories/" class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg border border-dark-400/60 text-dark-100 hover:bg-dark-700/60 hover:border-dark-300 font-medium transition-all backdrop-blur-sm">
             Browse Categories
           </a>
         </div>
 
-        <div class="ornament mt-12">✦</div>
+        <!-- Stats row -->
+        <div class="mt-16 flex items-center justify-center gap-8 sm:gap-12">
+          <div class="text-center">
+            <div class="text-2xl font-display font-bold text-primary-300">{latestPosts.length}</div>
+            <div class="text-xs text-dark-300 uppercase tracking-wider mt-1">Articles</div>
+          </div>
+          <div class="w-px h-8 bg-dark-500/40"></div>
+          <div class="text-center">
+            <div class="text-2xl font-display font-bold text-primary-300">5</div>
+            <div class="text-xs text-dark-300 uppercase tracking-wider mt-1">Topics</div>
+          </div>
+          <div class="w-px h-8 bg-dark-500/40"></div>
+          <div class="text-center">
+            <div class="text-2xl font-display font-bold text-primary-300">AI</div>
+            <div class="text-xs text-dark-300 uppercase tracking-wider mt-1">Powered</div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Bottom fade -->
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/30 to-transparent"></div>
   </section>
 
   <!-- Categories Section -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="font-display text-2xl font-bold text-dark-50">Topics</h2>
-      <a href="/tech-blog/categories/" class="text-primary-300 hover:text-primary-200 text-sm font-medium transition-colors">
-        View all →
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="flex items-center justify-between mb-10">
+      <div>
+        <h2 class="font-display text-3xl font-bold text-dark-50">Explore Topics</h2>
+        <p class="text-dark-300 text-sm mt-1">Browse articles by category</p>
+      </div>
+      <a href="/tech-blog/categories/" class="text-primary-300 hover:text-primary-200 text-sm font-medium transition-colors flex items-center gap-1">
+        View all <span>→</span>
       </a>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
@@ -78,12 +107,20 @@ const categoryCounts = categories.map(cat => ({
     </div>
   </section>
 
+  <!-- Divider -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="h-px bg-gradient-to-r from-transparent via-dark-500/40 to-transparent"></div>
+  </div>
+
   <!-- Latest Posts -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="font-display text-2xl font-bold text-dark-50">Latest Articles</h2>
-      <a href="/tech-blog/blog/" class="text-primary-300 hover:text-primary-200 text-sm font-medium transition-colors">
-        View all →
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="flex items-center justify-between mb-10">
+      <div>
+        <h2 class="font-display text-3xl font-bold text-dark-50">Latest Articles</h2>
+        <p class="text-dark-300 text-sm mt-1">Fresh insights from our AI research pipeline</p>
+      </div>
+      <a href="/tech-blog/blog/" class="text-primary-300 hover:text-primary-200 text-sm font-medium transition-colors flex items-center gap-1">
+        View all <span>→</span>
       </a>
     </div>
 
@@ -102,27 +139,42 @@ const categoryCounts = categories.map(cat => ({
         ))}
       </div>
     ) : (
-      <div class="text-center py-20 rounded-lg border border-dashed border-dark-500">
-        <p class="text-dark-300 text-lg">No posts yet. Create a GitHub Issue to generate your first AI-powered article!</p>
+      <div class="text-center py-20 rounded-lg border border-dashed border-dark-500/40 bg-dark-800/30">
+        <div class="text-4xl mb-4">📝</div>
+        <p class="text-dark-300 text-lg">No posts yet.</p>
+        <p class="text-dark-400 text-sm mt-1">Create a GitHub Issue to generate your first AI-powered article!</p>
       </div>
     )}
   </section>
 
+  <!-- Divider -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="h-px bg-gradient-to-r from-transparent via-dark-500/40 to-transparent"></div>
+  </div>
+
   <!-- How It Works -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="ornament mb-10">❧</div>
-    <h2 class="font-display text-2xl font-bold text-dark-50 text-center mb-12">How TechVerse Works</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+  <section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="text-center mb-14">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-dark-700/60 border border-dark-500/30 text-dark-200 text-xs font-medium uppercase tracking-wider mb-4">
+        How it works
+      </div>
+      <h2 class="font-display text-3xl font-bold text-dark-50">From Idea to Published Article</h2>
+      <p class="text-dark-300 text-sm mt-2 max-w-lg mx-auto">Our fully automated AI pipeline turns your topic ideas into well-researched, comprehensive articles</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {[
         { step: '01', title: 'Create an Issue', desc: 'Open a GitHub Issue with your topic idea and label it "generate-post"', icon: '📝' },
         { step: '02', title: 'AI Generates Content', desc: 'Google Gemini writes a comprehensive, well-structured article automatically', icon: '🤖' },
-        { step: '03', title: 'Auto Published', desc: 'The article is committed, built, and deployed to your live site', icon: '🚀' },
-      ].map(item => (
-        <div class="relative p-6 rounded-lg bg-dark-700/20 border border-dark-500/40">
-          <span class="text-5xl font-display font-bold text-dark-500/40 absolute top-4 right-4">{item.step}</span>
+        { step: '03', title: 'Auto Published', desc: 'The article is committed, built, and deployed to your live site in minutes', icon: '🚀' },
+      ].map((item, i) => (
+        <div class="group relative p-8 rounded-xl bg-gradient-to-b from-dark-700/40 to-dark-800/20 border border-dark-500/30 hover:border-primary-500/20 transition-all duration-300">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-500/10 text-primary-300 font-mono text-sm font-bold">{item.step}</span>
+            <div class="flex-1 h-px bg-dark-500/30"></div>
+          </div>
           <span class="text-3xl mb-4 block">{item.icon}</span>
-          <h3 class="font-display font-semibold text-dark-50 text-lg mb-2">{item.title}</h3>
-          <p class="text-dark-200 text-sm">{item.desc}</p>
+          <h3 class="font-display font-semibold text-dark-50 text-lg mb-3">{item.title}</h3>
+          <p class="text-dark-200 text-sm leading-relaxed">{item.desc}</p>
         </div>
       ))}
     </div>
