@@ -11,25 +11,6 @@ interface Props {
 
 const { title, description, date, category, slug, image, featured = false } = Astro.props;
 
-const categoryColors: Record<string, string> = {
-  'computer-science': 'from-blue-500 to-cyan-500',
-  'space-technology': 'from-violet-500 to-purple-500',
-  'artificial-intelligence': 'from-primary-500 to-accent-500',
-  'quantum-physics': 'from-rose-500 to-orange-500',
-  'nature': 'from-green-500 to-emerald-500',
-};
-
-const categoryIcons: Record<string, string> = {
-  'computer-science': '💻',
-  'space-technology': '🚀',
-  'artificial-intelligence': '🤖',
-  'quantum-physics': '⚛️',
-  'nature': '🌿',
-};
-
-const gradientClass = categoryColors[category] || 'from-primary-500 to-accent-500';
-const icon = categoryIcons[category] || '📝';
-
 const formattedDate = new Date(date).toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'short',
@@ -38,10 +19,10 @@ const formattedDate = new Date(date).toLocaleDateString('en-US', {
 ---
 
 <article class:list={[
-  'group relative rounded-2xl overflow-hidden transition-all duration-300',
-  'border border-dark-500/50 hover:border-dark-400/50',
-  'bg-dark-700/50 hover:bg-dark-700/80',
-  'hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-500/5',
+  'group relative rounded-lg overflow-hidden transition-all duration-300',
+  'border border-dark-500/40 hover:border-primary-500/30',
+  'bg-dark-700/30 hover:bg-dark-700/60',
+  'hover:shadow-lg hover:shadow-primary-900/20',
   featured ? 'md:col-span-2 md:row-span-2' : '',
 ]}>
   <a href={`/tech-blog/blog/${slug}/`} class="block h-full">
@@ -56,26 +37,30 @@ const formattedDate = new Date(date).toLocaleDateString('en-US', {
             featured ? 'h-48 md:h-64' : 'h-44',
           ]}
           loading="lazy"
+          style="filter: sepia(0.15) saturate(0.9);"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-dark-700/80 via-transparent to-transparent"></div>
       </div>
     ) : (
-      <div class={`h-1 bg-gradient-to-r ${gradientClass}`}></div>
+      <div class="h-1 bg-gradient-to-r from-primary-500/60 to-accent-500/60"></div>
     )}
 
     <div class:list={['p-6', featured ? 'md:p-8' : '']}>
-      <!-- Category badge -->
-      <div class="flex items-center gap-2 mb-3">
-        <span class={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${gradientClass} bg-opacity-10 text-white/90`}>
-          <span>{icon}</span>
-          {category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+      <!-- Category & date -->
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-xs font-semibold tracking-widest uppercase text-primary-300">
+          {category.replace(/-/g, ' ')}
         </span>
+        <span class="text-dark-400">·</span>
         <time class="text-dark-300 text-xs">{formattedDate}</time>
       </div>
 
+      <!-- Thin rule -->
+      <div class="h-px bg-dark-500/40 mb-3"></div>
+
       <!-- Title -->
       <h3 class:list={[
-        'font-display font-semibold text-white group-hover:text-primary-300 transition-colors mb-2',
+        'font-display font-semibold text-dark-50 group-hover:text-primary-300 transition-colors mb-2',
         featured ? 'text-2xl md:text-3xl' : 'text-lg',
       ]}>
         {title}
@@ -90,11 +75,9 @@ const formattedDate = new Date(date).toLocaleDateString('en-US', {
       </p>
 
       <!-- Read more -->
-      <div class="mt-4 flex items-center gap-1 text-primary-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+      <div class="mt-4 flex items-center gap-1 text-primary-300 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
         Read more
-        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
+        <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
       </div>
     </div>
   </a>
