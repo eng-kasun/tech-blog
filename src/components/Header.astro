@@ -9,11 +9,11 @@ const navItems = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-500/40">
+<header class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-md border-b border-dark-500/30">
   <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
     <a href="/tech-blog/" class="flex items-center gap-2.5 group">
-      <span class="text-primary-300 text-2xl leading-none" aria-hidden="true">☙</span>
-      <span class="font-display font-semibold text-xl text-dark-50 group-hover:text-primary-300 transition-colors">
+      <img src="/tech-blog/favicon.svg" alt="" class="w-8 h-8 rounded-lg" aria-hidden="true" />
+      <span class="font-display font-bold text-lg text-dark-50 group-hover:text-primary-300 transition-colors">
         TechVerse
       </span>
     </a>
