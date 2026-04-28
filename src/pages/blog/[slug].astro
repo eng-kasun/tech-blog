@@ -26,47 +26,49 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', { year: 'numeri
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
     <!-- Back link -->
-    <a href="/tech-blog/blog/" class="inline-flex items-center gap-1 text-dark-300 hover:text-primary-300 text-sm mb-8 transition-colors">
+    <a href="/tech-blog/blog/" class="inline-flex items-center gap-1 text-ink-300 hover:text-ink-700 text-xs font-sans uppercase tracking-widest mb-6 transition-colors">
       ← Back to articles
     </a>
 
     <!-- Header -->
     <header class="mb-10">
-      <div class="flex items-center gap-3 mb-4">
-        <span class="text-xs font-semibold tracking-widest uppercase text-primary-300">
+      <div class="rule-thick mb-1"></div>
+      <div class="rule-thin mb-4"></div>
+
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-accent">
           {icon} {post.data.category.replace(/-/g, ' ')}
         </span>
-        <span class="text-dark-400">·</span>
-        <time class="text-dark-300 text-sm">{formattedDate}</time>
+        <span class="text-ink-200">|</span>
+        <time class="text-ink-300 text-[11px] font-sans">{formattedDate}</time>
       </div>
 
-      <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark-50 leading-tight mb-4">
+      <h1 class="font-headline text-3xl sm:text-4xl md:text-5xl font-black text-ink-800 leading-tight mb-4">
         {post.data.title}
       </h1>
 
-      <p class="text-dark-200 text-lg leading-relaxed">
+      <p class="text-ink-500 text-lg leading-relaxed font-body italic">
         {post.data.description}
       </p>
 
       {post.data.tags.length > 0 && (
         <div class="flex flex-wrap gap-2 mt-4">
           {post.data.tags.map((tag: string) => (
-            <span class="px-2.5 py-0.5 rounded-md bg-dark-700 border border-dark-500/40 text-dark-200 text-xs">#{tag}</span>
+            <span class="px-2 py-0.5 border border-ink-200 text-ink-400 text-[11px] font-sans">#{tag}</span>
           ))}
         </div>
       )}
 
-      <div class="h-px bg-dark-500/40 mt-8"></div>
+      <div class="rule-thin mt-6"></div>
 
       {post.data.image && (
-        <div class="mt-8 rounded-lg overflow-hidden border border-dark-500/30">
+        <div class="mt-6 border border-ink-200 overflow-hidden">
           <img
             src={post.data.image}
             alt={post.data.title}
-            class="w-full h-64 sm:h-80 md:h-96 object-cover"
-            style="filter: sepia(0.15) saturate(0.9);"
+            class="w-full h-64 sm:h-80 md:h-96 object-cover grayscale"
           />
         </div>
       )}

@@ -24,22 +24,24 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.cat
 ---
 
 <BaseLayout title={catInfo.name}>
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="mb-12">
-      <a href="/tech-blog/categories/" class="inline-flex items-center gap-1 text-dark-300 hover:text-primary-300 text-sm mb-4 transition-colors">
-        ← All categories
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+    <div class="mb-8">
+      <a href="/tech-blog/categories/" class="inline-flex items-center gap-1 text-ink-300 hover:text-ink-700 text-xs font-sans uppercase tracking-widest mb-4 transition-colors">
+        ← All sections
       </a>
+      <div class="rule-thick mb-1"></div>
+      <div class="rule-thin mb-4"></div>
       <div class="flex items-center gap-3">
         <span class="text-3xl">{catInfo.icon}</span>
         <div>
-          <h1 class="font-display text-3xl font-bold text-dark-50">{catInfo.name}</h1>
-          <p class="text-dark-300">{posts.length} {posts.length === 1 ? 'article' : 'articles'}</p>
+          <h1 class="font-headline text-3xl font-black text-ink-800">{catInfo.name}</h1>
+          <p class="text-ink-400 text-sm font-sans">{posts.length} {posts.length === 1 ? 'article' : 'articles'}</p>
         </div>
       </div>
     </div>
 
     {posts.length > 0 ? (
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
         {posts.map(post => (
           <PostCard
             title={post.data.title}
@@ -52,8 +54,8 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.cat
         ))}
       </div>
     ) : (
-      <div class="text-center py-20 rounded-lg border border-dashed border-dark-500">
-        <p class="text-dark-300 text-lg">No articles in this category yet.</p>
+      <div class="text-center py-20 border border-ink-200">
+        <p class="text-ink-400 text-lg font-headline italic">No articles in this section yet.</p>
       </div>
     )}
   </div>

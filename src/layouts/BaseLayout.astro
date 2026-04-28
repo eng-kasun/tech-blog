@@ -26,11 +26,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" type="image/svg+xml" href="/tech-blog/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous" />
     <title>{title} | TechVerse</title>
   </head>
-  <body class="bg-dark-900 text-dark-50 font-sans min-h-screen flex flex-col antialiased">
+  <body class="bg-paper-100 text-ink-700 font-body min-h-screen flex flex-col antialiased">
     <Header />
     <main class="flex-1">
       <slot />
@@ -45,86 +45,64 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   @tailwind utilities;
 
   ::selection {
-    background-color: rgba(196, 154, 108, 0.3);
-    color: #fff;
+    background-color: rgba(139, 26, 26, 0.2);
+    color: #1f1b16;
   }
 
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #1a1814;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #4a4238;
-    border-radius: 4px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #6d6354;
-  }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #f5edd9; }
+  ::-webkit-scrollbar-thumb { background: #c9b88a; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #b5a070; }
 
-  /* Ornamental divider */
-  .ornament {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    color: #6d6354;
-    font-size: 0.875rem;
-    letter-spacing: 0.15em;
-  }
-  .ornament::before,
-  .ornament::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #4a4238, transparent);
+  /* Newspaper rule lines */
+  .rule-thick { border-top: 3px solid #1f1b16; }
+  .rule-thin { border-top: 1px solid #1f1b16; }
+  .rule-double { border-top: 3px double #1f1b16; }
+  .rule-dotted { border-top: 1px dotted #7a7060; }
+
+  /* Column divider */
+  .col-rule {
+    border-right: 1px solid #a8a090;
   }
 
   .prose {
-    @apply text-dark-50 leading-relaxed;
+    @apply text-ink-700 leading-relaxed font-body;
     font-size: 1.0625rem;
     line-height: 1.85;
   }
   .prose h1, .prose h2, .prose h3, .prose h4 {
-    @apply font-display text-dark-50 font-semibold mt-10 mb-5;
-    letter-spacing: -0.01em;
+    @apply font-headline text-ink-800 font-bold mt-10 mb-5;
+    letter-spacing: -0.02em;
   }
   .prose h1 { @apply text-3xl; }
-  .prose h2 { @apply text-2xl; border-bottom: 1px solid #3d3529; padding-bottom: 0.5rem; }
+  .prose h2 { @apply text-2xl; border-bottom: 2px solid #1f1b16; padding-bottom: 0.5rem; }
   .prose h3 { @apply text-xl; }
-  .prose p { @apply mb-5 text-dark-50; }
-  .prose a { @apply text-primary-300 hover:text-primary-200 underline underline-offset-4 decoration-primary-500/40 hover:decoration-primary-300/60 transition-colors; }
-  .prose code { @apply bg-dark-600 px-1.5 py-0.5 rounded text-sm font-mono text-primary-200; }
-  .prose pre { @apply bg-dark-700 p-4 rounded-lg overflow-x-auto mb-6 border border-dark-500; }
-  .prose pre code { @apply bg-transparent p-0; }
+  .prose p { @apply mb-5 text-ink-700; }
+  .prose a { @apply text-accent hover:text-accent-light underline underline-offset-4 decoration-accent/40 hover:decoration-accent/70 transition-colors; }
+  .prose code { @apply bg-paper-200 px-1.5 py-0.5 rounded text-sm font-mono text-ink-700; }
+  .prose pre { @apply bg-ink-800 text-paper-200 p-4 rounded overflow-x-auto mb-6 border border-ink-600; }
+  .prose pre code { @apply bg-transparent p-0 text-paper-200; }
   .prose ul, .prose ol { @apply mb-5 pl-6; }
   .prose ul { @apply list-disc; }
   .prose ol { @apply list-decimal; }
   .prose li { @apply mb-2; }
-  .prose blockquote { @apply border-l-4 border-primary-400 pl-5 italic text-dark-100 my-6; font-family: 'Playfair Display', Georgia, serif; }
-  .prose img { @apply rounded-lg my-6; }
-  .prose strong { @apply text-dark-50 font-semibold; }
-  .prose hr { border: none; text-align: center; margin: 2.5rem 0; color: #6d6354; letter-spacing: 0.3em; }
-  .prose hr::after { content: '✦  ✦  ✦'; }
-  .prose table { @apply w-full my-6 text-sm; border-collapse: separate; border-spacing: 0; }
-  .prose thead th { @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-dark-100 bg-dark-700 border-b border-dark-500; }
-  .prose thead th:first-child { @apply rounded-tl-lg; }
-  .prose thead th:last-child { @apply rounded-tr-lg; }
-  .prose tbody td { @apply px-4 py-3 border-b border-dark-500/40; }
-  .prose tbody tr { @apply transition-colors duration-150; }
-  .prose tbody tr:hover { @apply bg-dark-700/50; }
-  .prose tbody tr:last-child td { @apply border-b-0; }
-  .prose tbody tr:last-child td:first-child { @apply rounded-bl-lg; }
-  .prose tbody tr:last-child td:last-child { @apply rounded-br-lg; }
+  .prose blockquote { @apply border-l-4 border-ink-700 pl-5 italic text-ink-500 my-6 font-headline; }
+  .prose img { @apply my-6; }
+  .prose strong { @apply text-ink-800 font-bold; }
+  .prose hr { border: none; text-align: center; margin: 2.5rem 0; }
+  .prose hr::after { content: '— ✦ —'; color: #7a7060; letter-spacing: 0.3em; font-size: 0.875rem; }
+  .prose table { @apply w-full my-6 text-sm; border-collapse: collapse; }
+  .prose thead th { @apply px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-ink-800 bg-paper-200 border-b-2 border-ink-700; }
+  .prose tbody td { @apply px-4 py-3 border-b border-ink-100; }
+  .prose tbody tr:hover { @apply bg-paper-200/50; }
   .complexity-badge { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold font-mono; }
-  .complexity-green { @apply bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/30; }
-  .complexity-lime { @apply bg-lime-500/15 text-lime-400 ring-1 ring-lime-500/30; }
-  .complexity-yellow { @apply bg-yellow-500/15 text-yellow-400 ring-1 ring-yellow-500/30; }
-  .complexity-amber { @apply bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30; }
-  .complexity-orange { @apply bg-orange-500/15 text-orange-400 ring-1 ring-orange-500/30; }
-  .complexity-red { @apply bg-red-500/15 text-red-400 ring-1 ring-red-500/30; }
-  .complexity-rose { @apply bg-rose-500/15 text-rose-400 ring-1 ring-rose-500/30; }
-  .stable-yes { @apply text-emerald-400; }
-  .stable-no { @apply text-red-400; }
+  .complexity-green { @apply bg-emerald-100 text-emerald-800 ring-1 ring-emerald-300; }
+  .complexity-lime { @apply bg-lime-100 text-lime-800 ring-1 ring-lime-300; }
+  .complexity-yellow { @apply bg-yellow-100 text-yellow-800 ring-1 ring-yellow-300; }
+  .complexity-amber { @apply bg-amber-100 text-amber-800 ring-1 ring-amber-300; }
+  .complexity-orange { @apply bg-orange-100 text-orange-800 ring-1 ring-orange-300; }
+  .complexity-red { @apply bg-red-100 text-red-800 ring-1 ring-red-300; }
+  .complexity-rose { @apply bg-rose-100 text-rose-800 ring-1 ring-rose-300; }
+  .stable-yes { @apply text-emerald-700; }
+  .stable-no { @apply text-red-700; }
 </style>

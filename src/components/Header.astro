@@ -1,69 +1,87 @@
 ---
 const navItems = [
-  { label: 'Home', href: '/tech-blog/' },
-  { label: 'Blog', href: '/tech-blog/blog/' },
-  { label: 'Categories', href: '/tech-blog/categories/' },
+  { label: 'Front Page', href: '/tech-blog/' },
+  { label: 'All Articles', href: '/tech-blog/blog/' },
+  { label: 'Sections', href: '/tech-blog/categories/' },
   { label: 'About', href: '/tech-blog/about/' },
 ];
 
 const currentPath = Astro.url.pathname;
+const today = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<header class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-md border-b border-dark-500/30">
-  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-    <a href="/tech-blog/" class="flex items-center gap-2.5 group">
-      <img src="/tech-blog/favicon.svg" alt="" class="w-8 h-8 rounded-lg" aria-hidden="true" />
-      <span class="font-display font-bold text-lg text-dark-50 group-hover:text-primary-300 transition-colors">
-        TechVerse
-      </span>
-    </a>
-
-    <div class="hidden md:flex items-center gap-1">
-      {navItems.map((item) => (
-        <a
-          href={item.href}
-          class:list={[
-            'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
-            currentPath === item.href || (item.href !== '/tech-blog/' && currentPath.startsWith(item.href))
-              ? 'text-primary-300 bg-primary-500/10'
-              : 'text-dark-200 hover:text-dark-50 hover:bg-dark-600/40',
-          ]}
-        >
-          {item.label}
-        </a>
-      ))}
-    </div>
-
-    <!-- Mobile menu button -->
-    <button
-      id="mobile-menu-btn"
-      class="md:hidden p-2 rounded-lg text-dark-200 hover:text-dark-50 hover:bg-dark-600/40 transition-colors"
-      aria-label="Toggle menu"
-    >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
-  </nav>
-
-  <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-dark-500/40 bg-dark-800/95 backdrop-blur-sm">
-    <div class="px-4 py-3 space-y-1">
-      {navItems.map((item) => (
-        <a
-          href={item.href}
-          class:list={[
-            'block px-4 py-2.5 rounded-lg text-sm font-medium transition-all',
-            currentPath === item.href
-              ? 'text-primary-300 bg-primary-500/10'
-              : 'text-dark-200 hover:text-dark-50 hover:bg-dark-600/40',
-          ]}
-        >
-          {item.label}
-        </a>
-      ))}
-    </div>
+<header class="bg-paper-50 border-b-2 border-ink-700">
+  <!-- Top info bar -->
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-2 flex items-center justify-between text-[11px] text-ink-300 uppercase tracking-widest font-sans border-b border-ink-200">
+    <span>{today}</span>
+    <span>AI-Powered Daily</span>
+    <span>Est. 2025</span>
   </div>
+
+  <!-- Masthead -->
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6 text-center">
+    <div class="rule-double mb-4"></div>
+    <a href="/tech-blog/" class="block">
+      <h1 class="font-headline text-5xl sm:text-6xl md:text-7xl font-black text-ink-800 tracking-tight leading-none">
+        The TechVerse
+      </h1>
+      <p class="font-headline italic text-ink-400 text-sm sm:text-base mt-2 tracking-wide">
+        Science &amp; Technology Intelligence — Composed by Artificial Minds
+      </p>
+    </a>
+    <div class="rule-double mt-4"></div>
+  </div>
+
+  <!-- Navigation bar -->
+  <nav class="bg-ink-800 text-paper-100">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-center">
+      <div class="hidden md:flex items-center divide-x divide-ink-600">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'px-5 py-2.5 text-xs font-sans font-semibold uppercase tracking-widest transition-colors',
+              currentPath === item.href || (item.href !== '/tech-blog/' && currentPath.startsWith(item.href))
+                ? 'bg-ink-700 text-paper-50'
+                : 'text-paper-300 hover:text-paper-50 hover:bg-ink-700',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden py-2.5 text-paper-300 hover:text-paper-50 transition-colors"
+        aria-label="Toggle menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-ink-600">
+      <div class="max-w-5xl mx-auto px-4 py-2 space-y-1">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'block px-4 py-2 text-xs font-sans font-semibold uppercase tracking-widest transition-colors',
+              currentPath === item.href
+                ? 'text-paper-50 bg-ink-700'
+                : 'text-paper-300 hover:text-paper-50',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </nav>
 </header>
 
 <script>

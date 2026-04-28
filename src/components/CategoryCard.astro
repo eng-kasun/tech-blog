@@ -12,11 +12,9 @@ const { name, slug, count, icon } = Astro.props;
 
 <a
   href={`/tech-blog/categories/${slug}/`}
-  class="group relative rounded-xl overflow-hidden border border-dark-500/30 hover:border-primary-500/25 bg-gradient-to-b from-dark-700/50 to-dark-800/30 hover:from-dark-700/70 transition-all duration-300 p-6 flex flex-col items-center text-center"
+  class="group block border border-ink-300 p-4 text-center hover:bg-paper-200 transition-colors"
 >
-  <div class="w-14 h-14 rounded-xl bg-dark-600/40 border border-dark-500/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary-500/10 group-hover:border-primary-500/20 transition-all duration-300">
-    <span class="text-2xl">{icon}</span>
-  </div>
-  <h3 class="font-display font-semibold text-dark-50 text-base mb-1 group-hover:text-primary-300 transition-colors">{name}</h3>
-  <p class="text-dark-300 text-xs">{count} {count === 1 ? 'article' : 'articles'}</p>
+  <span class="text-2xl block mb-2">{icon}</span>
+  <h3 class="font-headline font-bold text-ink-800 text-sm group-hover:text-accent transition-colors">{name}</h3>
+  <p class="text-ink-300 text-[11px] font-sans mt-1">{count} {count === 1 ? 'article' : 'articles'}</p>
 </a>
