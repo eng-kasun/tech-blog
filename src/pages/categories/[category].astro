@@ -26,7 +26,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.cat
 <BaseLayout title={catInfo.name}>
   <div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
     <div class="mb-8">
-      <a href="/tech-blog/categories/" class="inline-flex items-center gap-1 text-ink-300 hover:text-ink-700 text-xs font-sans uppercase tracking-widest mb-4 transition-colors">
+      <a href="/tech-blog/categories/" class="inline-flex items-center gap-1 text-dark-50 hover:text-paper-200 text-xs font-sans uppercase tracking-widest mb-4 transition-colors">
         ← All sections
       </a>
       <div class="rule-thick mb-1"></div>
@@ -34,8 +34,8 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.cat
       <div class="flex items-center gap-3">
         <span class="text-3xl">{catInfo.icon}</span>
         <div>
-          <h1 class="font-headline text-3xl font-black text-ink-800">{catInfo.name}</h1>
-          <p class="text-ink-400 text-sm font-sans">{posts.length} {posts.length === 1 ? 'article' : 'articles'}</p>
+          <h1 class="font-headline text-3xl font-black text-paper-100">{catInfo.name}</h1>
+          <p class="text-paper-500 text-sm font-sans">{posts.length} {posts.length === 1 ? 'article' : 'articles'}</p>
         </div>
       </div>
     </div>
@@ -54,8 +54,8 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.cat
         ))}
       </div>
     ) : (
-      <div class="text-center py-20 border border-ink-200">
-        <p class="text-ink-400 text-lg font-headline italic">No articles in this section yet.</p>
+      <div class="text-center py-20 border border-dark-300">
+        <p class="text-paper-500 text-lg font-headline italic">No articles in this section yet.</p>
       </div>
     )}
   </div>
